@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="mysql,">
 
 
 
@@ -94,13 +94,18 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="KevinShin&#39;s Blog">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="数据库的事务隔离等级read uncommited不可避免脏读。 read commited可避免脏读，不可避免不可重复读。 repeated readmysql InnoDB默认级别的默认事务等级，不可以避免幻读。 serializable完全串行化的读，每次读都需要获得表级共享锁，读写相互都会阻塞。  脏读:是指当前事务可以查看到别的事务未提交的数据（重点未提交）。 例如，事务T1将某一值修改">
+<meta name="keywords" content="mysql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据库的事务隔离级别">
+<meta property="og:url" content="http://yoursite.com/2017/11/05/1.Mysql事务等级/index.html">
 <meta property="og:site_name" content="KevinShin&#39;s Blog">
+<meta property="og:description" content="数据库的事务隔离等级read uncommited不可避免脏读。 read commited可避免脏读，不可避免不可重复读。 repeated readmysql InnoDB默认级别的默认事务等级，不可以避免幻读。 serializable完全串行化的读，每次读都需要获得表级共享锁，读写相互都会阻塞。  脏读:是指当前事务可以查看到别的事务未提交的数据（重点未提交）。 例如，事务T1将某一值修改">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-11-05T09:50:13.319Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="KevinShin&#39;s Blog">
+<meta name="twitter:title" content="数据库的事务隔离级别">
+<meta name="twitter:description" content="数据库的事务隔离等级read uncommited不可避免脏读。 read commited可避免脏读，不可避免不可重复读。 repeated readmysql InnoDB默认级别的默认事务等级，不可以避免幻读。 serializable完全串行化的读，每次读都需要获得表级共享锁，读写相互都会阻塞。  脏读:是指当前事务可以查看到别的事务未提交的数据（重点未提交）。 例如，事务T1将某一值修改">
 
 
 
@@ -129,13 +134,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/">
+  <link rel="canonical" href="http://yoursite.com/2017/11/05/1.Mysql事务等级/">
 
 
 
 
 
-  <title>KevinShin's Blog</title>
+  <title>数据库的事务隔离级别 | KevinShin's Blog</title>
   
 
 
@@ -160,9 +165,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-   page-home 
- ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -245,9 +248,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -277,9 +280,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/05/1.Mysql事务等级/" itemprop="url">数据库的事务隔离级别</a></h1>
+          <h1 class="post-title" itemprop="name headline">数据库的事务隔离级别</h1>
         
 
         <div class="post-meta">
@@ -329,9 +330,7 @@
       
 
       
-        
-          
-            <h2 id="数据库的事务隔离等级"><a href="#数据库的事务隔离等级" class="headerlink" title="数据库的事务隔离等级"></a>数据库的事务隔离等级</h2><h3 id="read-uncommited"><a href="#read-uncommited" class="headerlink" title="read uncommited"></a>read uncommited</h3><p>不可避免脏读。</p>
+        <h2 id="数据库的事务隔离等级"><a href="#数据库的事务隔离等级" class="headerlink" title="数据库的事务隔离等级"></a>数据库的事务隔离等级</h2><h3 id="read-uncommited"><a href="#read-uncommited" class="headerlink" title="read uncommited"></a>read uncommited</h3><p>不可避免脏读。</p>
 <h3 id="read-commited"><a href="#read-commited" class="headerlink" title="read commited"></a>read commited</h3><p>可避免脏读，不可避免不可重复读。</p>
 <h3 id="repeated-read"><a href="#repeated-read" class="headerlink" title="repeated read"></a>repeated read</h3><p>mysql InnoDB默认级别的默认事务等级，不可以避免幻读。</p>
 <h3 id="serializable"><a href="#serializable" class="headerlink" title="serializable"></a>serializable</h3><p>完全串行化的读，每次读都需要获得表级共享锁，读写相互都会阻塞。</p>
@@ -384,8 +383,6 @@
 </table>
 <hr>
 
-          
-        
       
     </div>
     
@@ -400,14 +397,20 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/mysql/" rel="tag"># mysql</a>
+          
+        </div>
+      
+
+      
+      
+      
 
       
 
       
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -417,10 +420,11 @@
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -428,6 +432,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -448,8 +456,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="KevinShin">
           <p class="site-author-name" itemprop="name">KevinShin</p>
@@ -500,6 +517,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库的事务隔离等级"><span class="nav-number">1.</span> <span class="nav-text">数据库的事务隔离等级</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#read-uncommited"><span class="nav-number">1.1.</span> <span class="nav-text">read uncommited</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#read-commited"><span class="nav-number">1.2.</span> <span class="nav-text">read commited</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#repeated-read"><span class="nav-number">1.3.</span> <span class="nav-text">repeated read</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#serializable"><span class="nav-number">1.4.</span> <span class="nav-text">serializable</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#脏读"><span class="nav-number">1.4.1.</span> <span class="nav-text">脏读:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#不可重复读："><span class="nav-number">1.4.2.</span> <span class="nav-text">不可重复读：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#幻读："><span class="nav-number">1.4.3.</span> <span class="nav-text">幻读：</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -620,10 +653,10 @@
 
 
   
-    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
 <script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
 
-  
+
 
   
 
