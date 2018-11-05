@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="mysql,">
 
 
 
@@ -94,13 +94,18 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="KevinShin&#39;s Blog">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="一、基础规范表存储引擎必须使用InnoDB解读：线上 DB 统一使用 InnoDB 存储引擎，线下统计类从库也可用Ｍyisam 引擎 表字符集默认使用utf8mb4，而不是utf8解读：（1）通用，无乱码风险，汉字3字节，英文1字节（2）utf8mb4是utf8的超集，emoji表情以及部分不常见汉字在utf8下会表现为乱码 禁止使用存储过程，视图，触发器，Event解读：（1）对数据库性能影响较">
+<meta name="keywords" content="mysql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mysql规范">
+<meta property="og:url" content="http://yoursite.com/2017/11/05/2.Mysql规范/index.html">
 <meta property="og:site_name" content="KevinShin&#39;s Blog">
+<meta property="og:description" content="一、基础规范表存储引擎必须使用InnoDB解读：线上 DB 统一使用 InnoDB 存储引擎，线下统计类从库也可用Ｍyisam 引擎 表字符集默认使用utf8mb4，而不是utf8解读：（1）通用，无乱码风险，汉字3字节，英文1字节（2）utf8mb4是utf8的超集，emoji表情以及部分不常见汉字在utf8下会表现为乱码 禁止使用存储过程，视图，触发器，Event解读：（1）对数据库性能影响较">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-11-05T10:01:12.271Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="KevinShin&#39;s Blog">
+<meta name="twitter:title" content="Mysql规范">
+<meta name="twitter:description" content="一、基础规范表存储引擎必须使用InnoDB解读：线上 DB 统一使用 InnoDB 存储引擎，线下统计类从库也可用Ｍyisam 引擎 表字符集默认使用utf8mb4，而不是utf8解读：（1）通用，无乱码风险，汉字3字节，英文1字节（2）utf8mb4是utf8的超集，emoji表情以及部分不常见汉字在utf8下会表现为乱码 禁止使用存储过程，视图，触发器，Event解读：（1）对数据库性能影响较">
 
 
 
@@ -129,13 +134,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/">
+  <link rel="canonical" href="http://yoursite.com/2017/11/05/2.Mysql规范/">
 
 
 
 
 
-  <title>KevinShin's Blog</title>
+  <title>Mysql规范 | KevinShin's Blog</title>
   
 
 
@@ -160,9 +165,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-   page-home 
- ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -245,9 +248,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -277,9 +280,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/05/2.Mysql规范/" itemprop="url">Mysql规范</a></h1>
+          <h1 class="post-title" itemprop="name headline">Mysql规范</h1>
         
 
         <div class="post-meta">
@@ -329,9 +330,7 @@
       
 
       
-        
-          
-            <h3 id="一、基础规范"><a href="#一、基础规范" class="headerlink" title="一、基础规范"></a>一、基础规范</h3><p>表存储引擎必须使用InnoDB<br>解读：<br>线上 DB 统一使用 InnoDB 存储引擎，线下统计类从库也可用Ｍyisam 引擎</p>
+        <h3 id="一、基础规范"><a href="#一、基础规范" class="headerlink" title="一、基础规范"></a>一、基础规范</h3><p>表存储引擎必须使用InnoDB<br>解读：<br>线上 DB 统一使用 InnoDB 存储引擎，线下统计类从库也可用Ｍyisam 引擎</p>
 <p>表字符集默认使用utf8mb4，而不是utf8<br>解读：<br>（1）通用，无乱码风险，汉字3字节，英文1字节<br>（2）utf8mb4是utf8的超集，emoji表情以及部分不常见汉字在utf8下会表现为乱码</p>
 <p>禁止使用存储过程，视图，触发器，Event<br>解读：<br>（1）对数据库性能影响较大，互联网业务，能让站点层和服务层干的事情，不要交到数据库层<br>（2）调试，排错，迁移都比较困难，扩展性较差<br>（3）高并发大数据的互联网业务，架构设计思路是“解放数据库CPU，将计算转移到服务层”，并发量大的情况下，这些功能很可能将数据库拖死，业务逻辑放到服务层具备更好的扩展性，能够轻易实现“增机器就加性能”</p>
 <p>禁止在数据库中存储大文件，例如照片，可以将大文件存储在对象存储系统，数据库中存储路径<br>解读：<br>大文件和照片存储在文件系统，数据库里存URI<br>所有表、所有字段都需要加注释，推荐采用英文标点，避免出现乱码。状态类字段需説明每个状态的意义： 0:fail 1:pass 2:pending<br>单表数据行数建议控制在 2000W－3000W 以内，单表数据量控制在5G以下（大于这个数请前期设计的时候分表）<br>禁止在线上环境做数据库压力测试<br>测试，开发，线上数据库环境必须隔离</p>
@@ -362,8 +361,6 @@
 <p>军规练习：为什么下列SQL不能命中phone索引？<br>select uid from user where phone=13811223344<br>phone是varchar类型，SQL语句带入的是整形，故不会命中索引，加个引号就好了：<br>SELECT uid FROM t_user WHERE phone=’13812345678’</p>
 <p>参考文章：<br><a href="https://cloud.tencent.com/developer/article/1004367" target="_blank" rel="noopener">https://cloud.tencent.com/developer/article/1004367</a><br><a href="https://mp.weixin.qq.com/s/YfCORbcCX1hymXBCrZbAZg" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/YfCORbcCX1hymXBCrZbAZg</a><br><a href="https://mp.weixin.qq.com/s?__biz=MjM5ODYxMDA5OQ==&amp;mid=2651959906&amp;idx=1&amp;sn=2cbdc66cfb5b53cf4327a1e0d18d9b4a&amp;chksm=bd2d07be8a5a8ea86dc3c04eced3f411ee5ec207f73d317245e1fefea1628feb037ad71531bc&amp;scene=21#wechat_redirect" target="_blank" rel="noopener">https://mp.weixin.qq.com/s?__biz=MjM5ODYxMDA5OQ==&amp;mid=2651959906&amp;idx=1&amp;sn=2cbdc66cfb5b53cf4327a1e0d18d9b4a&amp;chksm=bd2d07be8a5a8ea86dc3c04eced3f411ee5ec207f73d317245e1fefea1628feb037ad71531bc&amp;scene=21#wechat_redirect</a><br><a href="https://mp.weixin.qq.com/s?__biz=MjM5ODYxMDA5OQ==&amp;mid=2651959910&amp;idx=1&amp;sn=6b6853b70dbbe6d689a12a4a60b84d8b&amp;chksm=bd2d07ba8a5a8eac6783bac951dba345d865d875538755fe665a5daaf142efe670e2c02b7c71&amp;scene=21#wechat_redirect" target="_blank" rel="noopener">https://mp.weixin.qq.com/s?__biz=MjM5ODYxMDA5OQ==&amp;mid=2651959910&amp;idx=1&amp;sn=6b6853b70dbbe6d689a12a4a60b84d8b&amp;chksm=bd2d07ba8a5a8eac6783bac951dba345d865d875538755fe665a5daaf142efe670e2c02b7c71&amp;scene=21#wechat_redirect</a></p>
 
-          
-        
       
     </div>
     
@@ -378,185 +375,36 @@
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/05/1.Mysql事务等级/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="KevinShin">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="KevinShin's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/05/1.Mysql事务等级/" itemprop="url">数据库的事务隔离级别</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-05T11:36:58+08:00">
-                2017-11-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-
+            <a href="/tags/mysql/" rel="tag"># mysql</a>
           
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="数据库的事务隔离等级"><a href="#数据库的事务隔离等级" class="headerlink" title="数据库的事务隔离等级"></a>数据库的事务隔离等级</h2><h3 id="read-uncommited"><a href="#read-uncommited" class="headerlink" title="read uncommited"></a>read uncommited</h3><p>不可避免脏读。</p>
-<h3 id="read-commited"><a href="#read-commited" class="headerlink" title="read commited"></a>read commited</h3><p>可避免脏读，不可避免不可重复读。</p>
-<h3 id="repeated-read"><a href="#repeated-read" class="headerlink" title="repeated read"></a>repeated read</h3><p>mysql InnoDB默认级别的默认事务等级，不可以避免幻读。</p>
-<h3 id="serializable"><a href="#serializable" class="headerlink" title="serializable"></a>serializable</h3><p>完全串行化的读，每次读都需要获得表级共享锁，读写相互都会阻塞。</p>
-<hr>
-<h4 id="脏读"><a href="#脏读" class="headerlink" title="脏读:"></a>脏读:</h4><p>是指当前事务可以查看到别的事务未提交的数据（<strong>重点未提交</strong>）。</p>
-<p>例如，事务T1将某一值修改，然后事务T2读取该值，此后T1因为某种原因撤销对该值的修改，这就导致了T2所读取到的数据是无效的。</p>
-<p>提交读，可以有效避免脏读。</p>
-<h4 id="不可重复读："><a href="#不可重复读：" class="headerlink" title="不可重复读："></a>不可重复读：</h4><p>是指一个事务内两次相同的查询却返回了不同结果集。</p>
-<p>在一个事务内，多次读同一个数据。在这个事务还没有结束时，另一个事务也访问并修改该同一数据。造成第一个事务的两次读数据的结果不一样。</p>
-<p>解决办法：如果只有在修改事务完全提交之后才可以读取数据。例如mysql行锁。</p>
-<h4 id="幻读："><a href="#幻读：" class="headerlink" title="幻读："></a>幻读：</h4><p>是指事务B以插入或删除行等方式来修改事务A查询搜索的结果集。</p>
-<p>例如事务A查询表中是否存在id=1的数据，如不存在往表里则插入数据。而事务B则在事务A查询后插入前，往表里插入了一条id=1的数据，事务A之前的查询结果就无效，像出现幻觉一样。</p>
-<p>这种情况在高并发情况下会出现，mysql的默认事务等级可重复读，不能避免，只有最高等级的SERIALIZABLE_READ可以保证不出现幻读的问题。例如表锁。</p>
-<hr>
-<table>
-<thead>
-<tr>
-<th>隔离级别</th>
-<th>脏读（Dirty Read）</th>
-<th>不可重复读（NonRepeatable Read）</th>
-<th>幻读（Phantom Read） </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>未提交读（Read uncommitted）</td>
-<td>可能</td>
-<td>可能</td>
-<td>可能</td>
-</tr>
-<tr>
-<td>已提交读（Read committed）</td>
-<td>不可能</td>
-<td>可能</td>
-<td>可能</td>
-</tr>
-<tr>
-<td>可重复读（Repeatable read）</td>
-<td>不可能</td>
-<td>不可能</td>
-<td>可能</td>
-</tr>
-<tr>
-<td>可串行化（Serializable ）</td>
-<td>不可能</td>
-<td>不可能</td>
-<td>不可能</td>
-</tr>
-</tbody>
-</table>
-<hr>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
       
 
       
       
-        <div class="post-eof"></div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/05/1.Mysql事务等级/" rel="next" title="数据库的事务隔离级别">
+                <i class="fa fa-chevron-left"></i> 数据库的事务隔离级别
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
       
     </footer>
   </div>
@@ -566,10 +414,11 @@
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -577,6 +426,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -597,8 +450,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="KevinShin">
           <p class="site-author-name" itemprop="name">KevinShin</p>
@@ -649,6 +511,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、基础规范"><span class="nav-number">1.</span> <span class="nav-text">一、基础规范</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、命名规范"><span class="nav-number">2.</span> <span class="nav-text">二、命名规范</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、表设计规范"><span class="nav-number">3.</span> <span class="nav-text">三、表设计规范</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四、列设计规范"><span class="nav-number">4.</span> <span class="nav-text">四、列设计规范</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#五、索引规范"><span class="nav-number">5.</span> <span class="nav-text">五、索引规范</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#六、SQL规范"><span class="nav-number">6.</span> <span class="nav-text">六、SQL规范</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#七、行为规范"><span class="nav-number">7.</span> <span class="nav-text">七、行为规范</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -769,10 +647,10 @@
 
 
   
-    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
 <script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
 
-  
+
 
   
 
