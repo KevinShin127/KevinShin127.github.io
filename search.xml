@@ -24,7 +24,7 @@
   </entry>
   <entry>
     <title><![CDATA[数据库的事务隔离级别]]></title>
-    <url>%2F2017%2F11%2F05%2Fmysql-transaction%2F</url>
+    <url>%2F2017%2F07%2F05%2Fmysql-transaction%2F</url>
     <content type="text"><![CDATA[数据库的事务隔离等级read uncommited不可避免脏读。 read commited可避免脏读，不可避免不可重复读。 repeated readmysql InnoDB默认级别的默认事务等级，不可以避免幻读。 serializable完全串行化的读，每次读都需要获得表级共享锁，读写相互都会阻塞。 脏读:是指当前事务可以查看到别的事务未提交的数据（重点未提交）。 例如，事务T1将某一值修改，然后事务T2读取该值，此后T1因为某种原因撤销对该值的修改，这就导致了T2所读取到的数据是无效的。 提交读，可以有效避免脏读。 不可重复读：是指一个事务内两次相同的查询却返回了不同结果集。 在一个事务内，多次读同一个数据。在这个事务还没有结束时，另一个事务也访问并修改该同一数据。造成第一个事务的两次读数据的结果不一样。 解决办法：如果只有在修改事务完全提交之后才可以读取数据。例如mysql行锁。 幻读：是指事务B以插入或删除行等方式来修改事务A查询搜索的结果集。 例如事务A查询表中是否存在id=1的数据，如不存在往表里则插入数据。而事务B则在事务A查询后插入前，往表里插入了一条id=1的数据，事务A之前的查询结果就无效，像出现幻觉一样。 这种情况在高并发情况下会出现，mysql的默认事务等级可重复读，不能避免，只有最高等级的SERIALIZABLE_READ可以保证不出现幻读的问题。例如表锁。 隔离级别 脏读（Dirty Read） 不可重复读（NonRepeatable Read） 幻读（Phantom Read） 未提交读（Read uncommitted） 可能 可能 可能 已提交读（Read committed） 不可能 可能 可能 可重复读（Repeatable read） 不可能 不可能 可能 可串行化（Serializable ） 不可能 不可能 不可能]]></content>
       <categories>
         <category>MySQL</category>
@@ -34,8 +34,8 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[mysql-index]]></title>
-    <url>%2F2017%2F07%2F07%2Fmysql-index%2F</url>
+    <title><![CDATA[MySQL索引]]></title>
+    <url>%2F2017%2F04%2F17%2Fmysql-index%2F</url>
     <content type="text"><![CDATA[关于MySQL索引（《高性能MySQL》阅读有感）B-Tree索引当我们讨论索引的时候，没有特别指明类型，多半是指的B-Tree索引。InnoDB引擎使用的B+Tree结构，按照原数据格式（MyISAM前缀压缩）进行存储，根据主键引用被索引的行（MyISAM根据物理位置）。 B-树意味着所有值都是按照顺序存储的，并且每个叶子页到根节点的距离相同。因为存储引擎不再需要进行全表扫描，只需要从索引根节点搜索，所以可以加快数据访问速度 局部性原理和磁盘预读由于磁盘的存取速度与内存之间鸿沟,为了提高效率,要尽量减少磁盘I/O.磁盘往往不是严格按需读取，而是每次都会预读,磁盘读取完需要的数据,会顺序向后读一定长度的数据放入内存。而这样做的理论依据是计算机科学中著名的局部性原理：12当一个数据被用到时，其附近的数据也通常会马上被使用程序运行期间所需要的数据通常比较集中 由于磁盘顺序读取的效率很高(不需要寻道时间，只需很少的旋转时间)，因此对于具有局部性的程序来说，预读可以提高I/O效率.预读的长度一般为页(page)的整倍数。 什么是索引索引可以理解为目录，字典的搜索表。索引的本质就是排序。每建一个索引就相当于将增加一个包含主键和索引列的索引表，表中数据按照索引顺序排序。因为索引字段不宜过多，索引也不能滥用，否则会影响写表的性能。 聚簇索引和非聚簇索引 聚簇：索引的叶子节点指向数据 innodb 非聚簇：索引的叶子节点指向引用 myisam 对于innodb引擎，如果没有primary key，在用unique key作主键，如果没有unique，则mysql会生成一个rowid作主键 索引类型 主键索引 primary key 唯一索引 unique index 普通索引 index 全文索引 fulltext index 索引的使用原则前缀索引区分度区分度指字段在数据库的不重复比。区分度越大，索引效果越明显。在区分度较小的字段上新建索引，基本无效，还会增加大量的索引文件，得不偿失。 最左匹配原则MySQL会一直向右匹配直到遇到范围查询(&gt;、&lt;、between、like)就停止匹配。缀索引在排序 order by 和分组 group by 操作的时候无法使用。 模糊查询前模糊是无法使用索引的，类似where c like ‘%a’。而like ‘a%’ 等价于 where c &gt;= ‘a’ and c &lt; ‘b’ 不能使用索引的场景 前模糊：例 like “%N” 隐式转换：例如name字段是varchar，而sql中where name=1而不是name=’1’ 函数运算不要在查询语句中加函数运算，否则索引失效。 不要滥用索引多余的索引会降低读写性能。即使满足了上述原则，mysql还是可能会弃用索引，因为有些查询即使使用索引，也会出现大量的随机io，相对于从数据记录中的顺序io开销更大。 EXPLAIN表扫描Handler_read_rnd_next 的值高则意味着查询运行低效，存在大量的表扫描，应该建立索引补救。 索引优化索引碎片与维护在数据表长期的更改过程中，索引文件和数据文件都会产生空洞，形成碎片。修复表的过程十分耗费资源，可以用比较长的周期修复表。1234//清理方法alert table xxx engine innodb; //或optimize table xxx;]]></content>
       <categories>
         <category>MySQL</category>
