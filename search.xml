@@ -56,6 +56,18 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[composer]]></title>
+    <url>%2F2016%2F11%2F15%2Fcomposer%2F</url>
+    <content type="text"><![CDATA[Composer官方文档 简介Composer 是 PHP 的一个依赖管理工具。Composer不是一个包管理器，但它在每个项目的基础上进行管理，在你项目的某个目录中（例如vendor）进行安装。默认情况下它不会在全局安装任何东西。因此，这仅仅是一个依赖管理。用过linux编译安装以后就很好理解了。 Linux安装 下载可执行文件1curl -sS https://getcomposer.org/installer | php 注：需要curl工具和php-openssl、zlib扩展 全局访问1mv composer.phar /usr/local/bin/composer 然后就可以在任何地方都能运行 composer 命令啦 使用声明依赖关系比如你需要一个库来做日志记录,决定使用 monolog。为了将它添加到你的项目中，你所需要做的就是创建一个 composer.json 文件，其中描述了项目的依赖关系。12345&#123; &quot;require&quot;: &#123; &quot;monolog/monolog&quot;: &quot;1.2.*&quot; &#125;&#125; require 需要一个 包名称 （例如 monolog/monolog） 映射到 包版本 （例如 1.0.*） 的对象 安装依赖包 - install1php composer.phar install 如果你进行了全局安装，可使用下面的命令代替：1composer install 接着前面的例子，这将会找到 monolog/monolog 的最新版本，并将它下载到 vendor 目录。 这是一个惯例把第三方的代码到一个指定的目录 vendor。如果是 monolog 将会创建 vendor/monolog/monolog 目录。install 命令将创建一个 composer.lock 文件到你项目的根目录中。 composer.lock - 锁文件在安装依赖后，Composer 将把安装时确切的版本号列表写入 composer.lock 文件。这将锁定改项目的特定版本。 注意：请提交你应用程序的 composer.lock （包括 composer.json）到你的版本库中。这是非常重要的，因为 install 命令将会检查锁文件是否存在，如果存在，它将下载指定的版本（忽略 composer.json 文件中的定义）。这意味着，任何人建立项目都将下载与指定版本完全相同的依赖。 更新 - update12php composer.phar updateor composer update 这将获取最新匹配的版本（根据你的 composer.json 文件）并将新版本更新进锁文件。如果只想安装或更新一个依赖，你可以白名单它们：1php composer.phar update monolog/monolog [...] 自动加载你只需要将下面这行代码添加到你项目的引导文件中：1require &apos;vendor/autoload.php&apos;; 便可以加载 Composer 下载的库中所有的类文件。]]></content>
+      <categories>
+        <category>PHP</category>
+        <category>工具</category>
+      </categories>
+      <tags>
+        <tag>PHP包管理工具</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Hexo+GitHub搭建个人Blog]]></title>
     <url>%2F2015%2F10%2F06%2Fhexo%2F</url>
     <content type="text"><![CDATA[Hexo简介Hexo是一款基于Node.js的静态博客框架，可以方便的生成静态网页托管在GitHub和Heroku上。参见：Github地址 安装Git/Node.js依赖本地安装git、node.js。这个不赘述了。1234//git安装检测git --version//npm安装检测npm -v 安装Hexo12345678910//安装npm install hexo -g//初始化网站hexo init blog //新建bloghexo new test//生成静态文件hexo g//开启本地服务器hexo s 打开浏览器输入地址： localhost:4000 就能看到页面了。 更多相关命令参见：https://hexo.io/zh-cn/ 推送GitHubGitHub创建个人仓库 仓库名必须为：github账号名.github.io，固定写法，别问为啥。 本地生成ssh密钥文件：1ssh-keygen -t rsa -C &quot;你的GitHub注册邮箱&quot; 然后直接三个回车即可，默认不需要设置密码。然后vi ~/.ssh/id_rsa.pub文件，将内容全部复制 打开GitHub/Setting/SSH keys页面,new SSH Key标题随意，内容复制进入保存，输入 ssh git@github.com ：https://pic3.zhimg.com/80/v2-da481ffa686410becd4186c656b4ebd6_hd.jpg如上则说明成功 修改站点配置文件打开blog根目录下的_config.yml，翻到最后修改为：1234deploy: type: gitrepo: 这里填入你之前在GitHub上创建仓库的完整路径，记得加上 .gitbranch: master 然后输入1hexo g -d //生成并推送 然后在浏览器输入xxxx.github.io就可访问了。 更换主题主题传送门 我使用的NEXT主题：github地址 NEXT主题中文配置文档 NEXT主题去掉footer字样 绑定域名]]></content>
