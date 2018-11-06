@@ -23,6 +23,17 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[Elasticsearch 安装配置]]></title>
+    <url>%2F2017%2F04%2F04%2FELK%2F</url>
+    <content type="text"><![CDATA[Elasticsearch安装配置安装java81234//查看java版本java -version//安装javayum -y install java-1.8.0 下载Elasticsearch123456789//下载wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.4.2.zip//校验sha1sum elasticsearch-5.4.2.zip//解压sudo unzip -n elasticsearch-5.4.2.zip -d /usr/local////usr/local/elasticsearch-5.4.2 即为$ES_HOME//启动/usr/local/elasticsearch-5.4.2/bin/elasticsearch 常见错误1OpenJDK 64-Bit Server VM warning: INFO: os::commit_memory(0x0000000085330000, 2060255232, 0) failed; error=&apos;Cannot allocate memory&apos; (errno=12) 错误原因：elasticsearch5.0默认分配jvm空间大小为2g 解决方案：修改jvm空间分配vim /usr/local/elasticsearch-5.4.2/config/jvm.options-Xms2g-Xmx2g修改为-Xms512m-Xmx512m 1can not run elasticsearch as root 错误原因：不能以root启动 解决方案：添加elasticsearch的用户并切换elasticsearch文件夹所属用户 12345678910111213141516171819202122groupadd esuseradd es -g es -p eschown -R es:es /usr/local/elasticsearch-5.4.2/sudo chown -R seclogin:users /usr/local/elasticsearch-5.4.2/max file descriptors [65535] for elasticsearch process is too low, increase to at least [65536]vim /etc/security/limits.conf //修改或者添加如下* hard nofile 65536* soft nofile 65536max virtual memory areas vm.max_map_count [65530] likely too low, increase to at least [262144]vim /etc/sysctl.conf//修改或者添加如下vm.max_map_count=262144//修改后sysctl -a，不起效就sysctl -p 1Failed to obtain node lock 解决方案：需要重启elasticsearch 12345//停止elasticsearchps -ef | grep elastickill -9 xxx//切换到 es用户再重新执行（seclogin用户不需要）su es -c /usr/local/elasticsearch-5.4.2/bin/elasticsearch 外部访问需以下配置12345678910111213141516vim /usr/local/elasticsearch-5.4.2/config/elasticsearch.ymlnetwork.host: 172.17.6.219 #本服务器ip//centos7以下需要修改iptablesvim /etc/sysconfig/iptables-A INPUT -p tcp -m state --state NEW -m tcp --dport 9200 -j ACCEPT-A INPUT -p udp -m state --state NEW -m udp --dport 9200 -j ACCEPTservice iptables restart//centos7需要修改firewall（如果没有防火墙就不用管了）firewall-cmd --permanent --add-port=9200/tcpfirewall-cmd --reloadfirewall-cmd --state//后台启动elasticsearch/usr/local/elasticsearch-5.4.2/bin/elasticsearch -d Elasticsearch测试及使用1234567891011121314151617181920212223242526272829303132333435363738//查看集群健康状态curl &apos;http://172.16.9.192:9200/_cat/health?v&apos; (dev)curl &apos;http://10.10.1.71:9200/_cat/health?v&apos; (test)curl &apos;http://10.1.2.56:9200/_cat/health?v&apos; (online)//查看 Elasticsearch 的基本信息curl &apos;http://172.16.9.192:9200/?pretty&apos; (dev)curl &apos;http://10.10.1.71:9200/?pretty&apos; (test)curl &apos;http://10.1.2.56:9200/?pretty&apos; (online)//列出所有索引curl &apos;http://172.16.9.192:9200/_cat/indices?v&apos; (dev)curl &apos;http://10.10.1.71:9200/_cat/indices?v&apos; (test)curl &apos;http://10.1.2.56:9200/_cat/indices?v&apos; (online)//添加一个名叫 test的索引（可理解为数据库）curl -XPUT &apos;http://172.16.9.192:9200/test?pretty&apos;curl -XPUT &apos;http://10.1.2.56:9200/test?pretty&apos;//查看索引curl &apos;http://101.200.42.161:9200/test?pretty&apos;//创建一个类型curl -XPUT &apos;http://101.200.42.161:9200/test/_mapping/article?pretty&apos; -d &apos;&#123; &quot;properties&quot;: &#123; &quot;id&quot;: &#123; &quot;type&quot;: &quot;integer&quot;, &quot;index&quot;: &quot;not_analyzed&quot; &#125;, &quot;subject&quot;: &#123; &quot;type&quot;: &quot;string&quot;, &quot;analyzer&quot;: &quot;standard&quot; &#125;, &quot;content&quot;: &#123; &quot;type&quot;: &quot;string&quot;, &quot;analyzer&quot;: &quot;standard&quot; &#125;, &quot;author&quot;: &#123; &quot;type&quot;: &quot;string&quot;, &quot;index&quot;: &quot;not_analyzed&quot; &#125; &#125;&#125;&apos; 测试数据导入12wget https://github.com/bly2k/files/blob/master/accounts.zip?raw=truecurl -XPOST &apos;http://101.200.42.161::9200/bank/account/_bulk?pretty&apos; --data-binary @accounts.json Elasticsearch-PHP 配置https://www.elastic.co/guide/en/elasticsearch/client/php-api/5.0/_configuration.html 备注：elasticsearch默认最大查询数量是一万，test和online环境将最大查询数量提到了十万，设置命令：curl -XPUT http://10.1.2.56:9200/contentplatform/_settings -d ‘{ “index” : { “max_result_window” : 100000}}’]]></content>
+      <categories>
+        <category>工具</category>
+      </categories>
+      <tags>
+        <tag>工具</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Hexo+GitHub搭建个人Blog]]></title>
     <url>%2F2015%2F10%2F06%2Fhexo%2F</url>
     <content type="text"><![CDATA[Hexo简介Hexo是一款基于Node.js的静态博客框架，可以方便的生成静态网页托管在GitHub和Heroku上。参见：Github地址 安装Git/Node.js依赖本地安装git、node.js。这个不赘述了。1234//git安装检测git --version//npm安装检测npm -v 安装Hexo12345678910//安装npm install hexo -g//初始化网站hexo init blog //新建bloghexo new test//生成静态文件hexo g//开启本地服务器hexo s 打开浏览器输入地址： localhost:4000 就能看到页面了。 更多相关命令参见：https://hexo.io/zh-cn/ 推送GitHubGitHub创建个人仓库 仓库名必须为：github账号名.github.io，固定写法，别问为啥。 本地生成ssh密钥文件：1ssh-keygen -t rsa -C &quot;你的GitHub注册邮箱&quot; 然后直接三个回车即可，默认不需要设置密码。然后vi ~/.ssh/id_rsa.pub文件，将内容全部复制 打开GitHub/Setting/SSH keys页面,new SSH Key标题随意，内容复制进入保存，输入 ssh git@github.com ：https://pic3.zhimg.com/80/v2-da481ffa686410becd4186c656b4ebd6_hd.jpg如上则说明成功 修改站点配置文件打开blog根目录下的_config.yml，翻到最后修改为：1234deploy: type: gitrepo: 这里填入你之前在GitHub上创建仓库的完整路径，记得加上 .gitbranch: master 然后输入1hexo g -d //生成并推送 然后在浏览器输入xxxx.github.io就可访问了。 更换主题主题传送门 我使用的NEXT主题：github地址 NEXT主题中文配置文档 NEXT主题去掉footer字样 绑定域名]]></content>
@@ -30,8 +41,8 @@
         <category>工具</category>
       </categories>
       <tags>
-        <tag>hexo</tag>
         <tag>工具</tag>
+        <tag>hexo</tag>
       </tags>
   </entry>
 </search>
