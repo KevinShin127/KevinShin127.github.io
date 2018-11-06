@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[oh-my-zsh]]></title>
-    <url>%2F2018%2F11%2F06%2Foh-my-zsh%2F</url>
+    <title><![CDATA[oh-my-zsh配置]]></title>
+    <url>%2F2018%2F08%2F06%2Foh-my-zsh%2F</url>
     <content type="text"><![CDATA[mac os 下配置 oh my zshgithub链接 oh my zsh 是一个开源的、社区驱动的框架，用来管理ZSH配置 安装依赖： 系统：mac os 或 linux shell：zsh 工具：curl 或 wget 自动安装git via curl： 1sh -c &quot;$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)&quot; via wget： 1sh -c &quot;$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)&quot; 默认的安装目录是在 ~/.oh-my-zsh 隐藏目录下，如何改更改目录可使用以下命令 1export ZSH=&quot;$HOME/.dotfiles/oh-my-zsh&quot;; sh -c &quot;$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)&quot; 配置配置文件：1vi ~/.zshrc 主题主题样式链接，推荐主题ys1ZSH_THEME=&quot;robbyrussell&quot; 也可以配置成从你喜欢的皮肤列表里随机一款1234ZSH_THEME_RANDOM_CANDIDATES=( &quot;robbyrussell&quot; &quot;agnoster&quot;) 插件autojumpgithub地址 安装 1brew install autojump vim ~/.zshrc 12345plugins=(git autojump)### 在下面添加一行[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] &amp;&amp; . $(brew --prefix)/etc/profile.d/autojump.sh source ~/.zshrc]]></content>
       <categories>
         <category>工具</category>
