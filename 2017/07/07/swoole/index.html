@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="PHP包管理工具,">
+  <meta name="keywords" content="PHP,swoole,">
 
 
 
@@ -79,18 +79,23 @@
 
 
 
-<meta name="description" content="Composer官方文档   简介Composer 是 PHP 的一个依赖管理工具。Composer不是一个包管理器，但它在每个项目的基础上进行管理，在你项目的某个目录中（例如vendor）进行安装。默认情况下它不会在全局安装任何东西。因此，这仅仅是一个依赖管理。用过linux编译安装以后就很好理解了。 Linux安装 下载可执行文件1curl -sS https://getcomposer.or">
-<meta name="keywords" content="PHP包管理工具">
+<meta name="description" content="Server运行流程图 进程/线程结构图 创建TCP Server 示例代码12345678910111213141516171819202122//创建Server对象，监听 127.0.0.1:9501端口$serv = new swoole_server(&amp;quot;127.0.0.1&amp;quot;, 9501); //监听连接进入事件$serv-&amp;gt;on(&amp;apos;connect&amp;ap">
+<meta name="keywords" content="PHP,swoole">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Composer简介">
-<meta property="og:url" content="http://yoursite.com/2016/11/15/composer/index.html">
+<meta property="og:title" content="初识swoole">
+<meta property="og:url" content="http://yoursite.com/2017/07/07/swoole/index.html">
 <meta property="og:site_name" content="KevinShin&#39;s Blog">
-<meta property="og:description" content="Composer官方文档   简介Composer 是 PHP 的一个依赖管理工具。Composer不是一个包管理器，但它在每个项目的基础上进行管理，在你项目的某个目录中（例如vendor）进行安装。默认情况下它不会在全局安装任何东西。因此，这仅仅是一个依赖管理。用过linux编译安装以后就很好理解了。 Linux安装 下载可执行文件1curl -sS https://getcomposer.or">
+<meta property="og:description" content="Server运行流程图 进程/线程结构图 创建TCP Server 示例代码12345678910111213141516171819202122//创建Server对象，监听 127.0.0.1:9501端口$serv = new swoole_server(&amp;quot;127.0.0.1&amp;quot;, 9501); //监听连接进入事件$serv-&amp;gt;on(&amp;apos;connect&amp;ap">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-07T12:29:48.368Z">
+<meta property="og:image" content="https://wiki.swoole.com/static/uploads/swoole.jpg">
+<meta property="og:image" content="https://wiki.swoole.com/static/image/process.jpg">
+<meta property="og:image" content="https://wiki.swoole.com/static/uploads/swoole.jpg">
+<meta property="og:image" content="https://wiki.swoole.com/static/image/process.jpg">
+<meta property="og:updated_time" content="2018-11-07T13:25:29.123Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Composer简介">
-<meta name="twitter:description" content="Composer官方文档   简介Composer 是 PHP 的一个依赖管理工具。Composer不是一个包管理器，但它在每个项目的基础上进行管理，在你项目的某个目录中（例如vendor）进行安装。默认情况下它不会在全局安装任何东西。因此，这仅仅是一个依赖管理。用过linux编译安装以后就很好理解了。 Linux安装 下载可执行文件1curl -sS https://getcomposer.or">
+<meta name="twitter:title" content="初识swoole">
+<meta name="twitter:description" content="Server运行流程图 进程/线程结构图 创建TCP Server 示例代码12345678910111213141516171819202122//创建Server对象，监听 127.0.0.1:9501端口$serv = new swoole_server(&amp;quot;127.0.0.1&amp;quot;, 9501); //监听连接进入事件$serv-&amp;gt;on(&amp;apos;connect&amp;ap">
+<meta name="twitter:image" content="https://wiki.swoole.com/static/uploads/swoole.jpg">
 
 
 
@@ -120,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/11/15/composer/">
+  <link rel="canonical" href="http://yoursite.com/2017/07/07/swoole/">
 
 
 
 
 
-  <title>Composer简介 | KevinShin's Blog</title>
+  <title>初识swoole | KevinShin's Blog</title>
   
 
 
@@ -285,7 +290,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/15/composer/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/07/swoole/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="KevinShin">
@@ -302,7 +307,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Composer简介</h1>
+          <h1 class="post-title" itemprop="name headline">初识swoole</h1>
         
 
         <div class="post-meta">
@@ -314,8 +319,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-11-15T21:41:34+08:00">
-                2016-11-15
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-07T21:19:54+08:00">
+                2017-07-07
               </time>
             
 
@@ -337,19 +342,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/PHP/" itemprop="url" rel="index">
-                    <span itemprop="name">PHP</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/PHP/工具/" itemprop="url" rel="index">
-                    <span itemprop="name">工具</span>
+                  <a href="/categories/swoole/" itemprop="url" rel="index">
+                    <span itemprop="name">swoole</span>
                   </a>
                 </span>
 
@@ -385,27 +379,60 @@
       
 
       
-        <h1 id="Composer"><a href="#Composer" class="headerlink" title="Composer"></a>Composer</h1><p><a href="http://docs.phpcomposer.com/" target="_blank" rel="noopener">官方文档</a>  </p>
-<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Composer 是 PHP 的一个依赖管理工具。<br>Composer不是一个包管理器，但它在每个项目的基础上进行管理，在你项目的某个目录中（例如vendor）进行安装。默认情况下它不会在全局安装任何东西。因此，这仅仅是一个依赖管理。<br>用过linux编译安装以后就很好理解了。</p>
-<h2 id="Linux安装"><a href="#Linux安装" class="headerlink" title="Linux安装"></a>Linux安装</h2><blockquote>
-<p>下载可执行文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -sS https://getcomposer.org/installer | php</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<p><strong>注：需要curl工具和php-openssl、zlib扩展</strong></p>
+        <h1 id="Server"><a href="#Server" class="headerlink" title="Server"></a>Server</h1><h3 id="运行流程图"><a href="#运行流程图" class="headerlink" title="运行流程图"></a>运行流程图</h3><p><img src="https://wiki.swoole.com/static/uploads/swoole.jpg" alt="image"></p>
+<h3 id="进程-线程结构图"><a href="#进程-线程结构图" class="headerlink" title="进程/线程结构图"></a>进程/线程结构图</h3><p><img src="https://wiki.swoole.com/static/image/process.jpg" alt="image"></p>
+<h4 id="创建TCP-Server-示例代码"><a href="#创建TCP-Server-示例代码" class="headerlink" title="创建TCP Server 示例代码"></a>创建TCP Server 示例代码</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">//创建Server对象，监听 127.0.0.1:9501端口</span><br><span class="line">$serv = new swoole_server(&quot;127.0.0.1&quot;, 9501); </span><br><span class="line"></span><br><span class="line">//监听连接进入事件</span><br><span class="line">$serv-&gt;on(&apos;connect&apos;, function ($serv, $fd) &#123;  </span><br><span class="line">    echo &quot;Client: Connect.\n&quot;;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">//服务器可以同时被成千上万个客户端连接，$fd就是客户端连接的唯一标识符</span><br><span class="line"></span><br><span class="line">//监听数据接收事件</span><br><span class="line">$serv-&gt;on(&apos;receive&apos;, function ($serv, $fd, $from_id, $data) &#123;</span><br><span class="line">    $serv-&gt;send($fd, &quot;Server: &quot;.$data);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">//监听连接关闭事件</span><br><span class="line">$serv-&gt;on(&apos;close&apos;, function ($serv, $fd) &#123;</span><br><span class="line">    echo &quot;Client: Close.\n&quot;;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">//启动服务器</span><br><span class="line">$serv-&gt;start();</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>全局访问<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv composer.phar /usr/local/bin/composer</span><br></pre></td></tr></table></figure></p>
+<p>==swoole_server只能用于php-cli环境，否则会抛出致命错误。<br>请勿在使用swoole_server之前调用其他异步IO的API，否则将无法创建swoole_server。==</p>
 </blockquote>
-<p>然后就可以在任何地方都能运行 composer 命令啦</p>
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h4 id="声明依赖关系"><a href="#声明依赖关系" class="headerlink" title="声明依赖关系"></a>声明依赖关系</h4><p>比如你需要一个库来做日志记录,决定使用 monolog。为了将它添加到你的项目中，你所需要做的就是创建一个 composer.json 文件，其中描述了项目的依赖关系。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;require&quot;: &#123;</span><br><span class="line">        &quot;monolog/monolog&quot;: &quot;1.2.*&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>require 需要一个 包名称 （例如 monolog/monolog） 映射到 包版本 （例如 1.0.*） 的对象</p>
-<h4 id="安装依赖包-install"><a href="#安装依赖包-install" class="headerlink" title="安装依赖包 - install"></a>安装依赖包 - install</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php composer.phar install</span><br></pre></td></tr></table></figure>
-<p>如果你进行了全局安装，可使用下面的命令代替：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer install</span><br></pre></td></tr></table></figure></p>
-<p>接着前面的例子，这将会找到 monolog/monolog 的最新版本，并将它下载到 vendor 目录。 这是一个惯例把第三方的代码到一个指定的目录 vendor。如果是 monolog 将会创建 vendor/monolog/monolog 目录。<br>install 命令将创建一个 composer.lock 文件到你项目的根目录中。</p>
-<h4 id="composer-lock-锁文件"><a href="#composer-lock-锁文件" class="headerlink" title="composer.lock - 锁文件"></a>composer.lock - 锁文件</h4><p>在安装依赖后，Composer 将把安装时确切的版本号列表写入 composer.lock 文件。这将锁定改项目的特定版本。  </p>
-<p><strong>注意：请提交你应用程序的 composer.lock （包括 composer.json）到你的版本库中。</strong><br>这是非常重要的，因为 install 命令将会检查锁文件是否存在，如果存在，它将下载指定的版本（忽略 composer.json 文件中的定义）。<br>这意味着，任何人建立项目都将下载与指定版本完全相同的依赖。</p>
-<h4 id="更新-update"><a href="#更新-update" class="headerlink" title="更新 - update"></a>更新 - update</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">php composer.phar update</span><br><span class="line">or  composer update</span><br></pre></td></tr></table></figure>
-<p>这将获取最新匹配的版本（根据你的 composer.json 文件）并将新版本更新进锁文件。<br>如果只想安装或更新一个依赖，你可以白名单它们：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php composer.phar update monolog/monolog [...]</span><br></pre></td></tr></table></figure></p>
-<h2 id="自动加载"><a href="#自动加载" class="headerlink" title="自动加载"></a>自动加载</h2><p>你只需要将下面这行代码添加到你项目的引导文件中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">require &apos;vendor/autoload.php&apos;;</span><br></pre></td></tr></table></figure></p>
-<p>便可以加载 Composer 下载的库中所有的类文件。</p>
+<p>swoole_server是异步服务器，支持TCP、UDP、UnixSocket 3种协议，通过监听事件的方式来执行程序的。使用者无需关注底层实现细节，仅需要设置网络事件的回调函数即可。<br>如当有新的TCP连接进入时会执行onConnect事件回调，当某个连接向服务器发送数据时会回调onReceive函数。客户端主动断开连接，会触发onClose事件回调。</p>
+<h4 id="构建Server对象"><a href="#构建Server对象" class="headerlink" title="构建Server对象"></a>构建Server对象</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$serv = new swoole_server(&quot;127.0.0.1&quot;, 9501, SWOOLE_BASE, SWOOLE_SOCK_TCP);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>$mode运行的模式，swoole提供了<a href="https://wiki.swoole.com/wiki/page/353.html" target="_blank" rel="noopener">3种运行模式</a>，默认为多进程模式</li>
+<li>$sock_type指定socket的类型，支持TCP/UDP、TCP6/UDP6、UnixSock Stream/Dgram 6种<h4 id="设置运行时参数"><a href="#设置运行时参数" class="headerlink" title="设置运行时参数"></a>设置运行时参数</h4></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$serv-&gt;set(array(</span><br><span class="line">    &apos;reactor_num&apos; =&gt; 2, //通过此参数来调节poll线程的数量，以充分利用多核。reactor_num和writer_num默认设置为CPU核数</span><br><span class="line">    &apos;worker_num&apos; =&gt; 4, //设置启动的worker进程数量。swoole采用固定worker进程的模式。PHP代码中是全异步非阻塞，worker_num配置为CPU核数的1-4倍即可。如果是同步阻塞，worker_num配置为100或者更高</span><br><span class="line">    &apos;max_conn&apos; =&gt; 10000, //最大tcp连接</span><br><span class="line">    &apos;max_request&apos; =&gt; 50, //此参数表示worker进程在处理完n次请求后结束运行。manager会重新创建一个worker进程。此选项用来防止worker进程内存溢出。</span><br><span class="line">    &apos;daemonize&apos; =&gt; true, //守护进程化</span><br><span class="line">    &apos;backlog&apos; =&gt; 128, //Listen队列长度.此参数将决定最多同时有多少个待accept的连接，swoole本身accept效率是很高的，基本上不会出现大量排队情况。</span><br><span class="line">    &apos;log_file&apos; =&gt; &apos;/data/log/swoole.log&apos; //日志</span><br><span class="line">));</span><br></pre></td></tr></table></figure>
+<h4 id="属性列表"><a href="#属性列表" class="headerlink" title="属性列表"></a>属性列表</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$serv-&gt;setting;  //set()函数所设置的参数会保存到$setting属性上。</span><br><span class="line">$serv-&gt;manager_pid; //管理进程的PID，通过向管理进程发送SIGUSR1信号可实现柔性重启</span><br><span class="line">$serv-&gt;master_pid; //主进程的PID，通过向主进程发送SIGTERM信号可安全关闭服务器</span><br><span class="line">$serv-&gt;worker_id;  //得到当前Worker进程的编号，包括Task进程。</span><br><span class="line">$serv-&gt;worker_pid; //得到当前Worker进程的操作系统进程ID</span><br><span class="line">$serv-&gt;connections; //当前服务器的客户端连接，可使用foreach遍历所有连接</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>==工作进程重启后worker_id的值是不变的==</p>
+</blockquote>
+<h4 id="注册事件回调函数"><a href="#注册事件回调函数" class="headerlink" title="注册事件回调函数"></a>注册事件回调函数</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$serv-&gt;on(&apos;Connect&apos;, &apos;my_onConnect&apos;);</span><br><span class="line">$serv-&gt;on(&apos;Receive&apos;, &apos;my_onReceive&apos;);</span><br><span class="line">$serv-&gt;on(&apos;Close&apos;, &apos;my_onClose&apos;);</span><br><span class="line">$serv-&gt;on(&apos;Task&apos;, &apos;my_onTask&apos;);//处理异步任务</span><br><span class="line">$serv-&gt;on(&apos;Finish&apos;, &apos;my_onFinish&apos;);//返回处理异步任务的结果</span><br></pre></td></tr></table></figure>
+<p>PHP中可以使用<a href="https://wiki.swoole.com/wiki/page/458.html" target="_blank" rel="noopener">4种回调函数</a>的风格,我个人比较倾向函数式。</p>
+<h3 id="编程须知："><a href="#编程须知：" class="headerlink" title="编程须知："></a>编程须知：</h3><ul>
+<li>在异步IO的程序中，不得使用sleep/usleep/time_sleep_until/time_nanosleep</li>
+</ul>
+<p>onReceive事件中执行了sleep函数，server在100秒内无法再收到任何客户端请求。</p>
+<ul>
+<li>在swoole程序中禁止使用exit/die，如果PHP代码中有exit/die，当前工作的Worker进程、Task进程、User进程、以及swoole_process进程会立即退出。</li>
+</ul>
+<p>建议使用try/catch的方式替换exit/die，实现中断执行跳出PHP函数调用栈。</p>
+<h1 id="Server-1"><a href="#Server-1" class="headerlink" title="Server"></a>Server</h1><h3 id="运行流程图-1"><a href="#运行流程图-1" class="headerlink" title="运行流程图"></a>运行流程图</h3><p><img src="https://wiki.swoole.com/static/uploads/swoole.jpg" alt="image"></p>
+<h3 id="进程-线程结构图-1"><a href="#进程-线程结构图-1" class="headerlink" title="进程/线程结构图"></a>进程/线程结构图</h3><p><img src="https://wiki.swoole.com/static/image/process.jpg" alt="image"></p>
+<h4 id="创建TCP-Server-示例代码-1"><a href="#创建TCP-Server-示例代码-1" class="headerlink" title="创建TCP Server 示例代码"></a>创建TCP Server 示例代码</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">//创建Server对象，监听 127.0.0.1:9501端口</span><br><span class="line">$serv = new swoole_server(&quot;127.0.0.1&quot;, 9501); </span><br><span class="line"></span><br><span class="line">//监听连接进入事件</span><br><span class="line">$serv-&gt;on(&apos;connect&apos;, function ($serv, $fd) &#123;  </span><br><span class="line">    echo &quot;Client: Connect.\n&quot;;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">//服务器可以同时被成千上万个客户端连接，$fd就是客户端连接的唯一标识符</span><br><span class="line"></span><br><span class="line">//监听数据接收事件</span><br><span class="line">$serv-&gt;on(&apos;receive&apos;, function ($serv, $fd, $from_id, $data) &#123;</span><br><span class="line">    $serv-&gt;send($fd, &quot;Server: &quot;.$data);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">//监听连接关闭事件</span><br><span class="line">$serv-&gt;on(&apos;close&apos;, function ($serv, $fd) &#123;</span><br><span class="line">    echo &quot;Client: Close.\n&quot;;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">//启动服务器</span><br><span class="line">$serv-&gt;start();</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>==swoole_server只能用于php-cli环境，否则会抛出致命错误。<br>请勿在使用swoole_server之前调用其他异步IO的API，否则将无法创建swoole_server。==</p>
+</blockquote>
+<p>swoole_server是异步服务器，支持TCP、UDP、UnixSocket 3种协议，通过监听事件的方式来执行程序的。使用者无需关注底层实现细节，仅需要设置网络事件的回调函数即可。<br>如当有新的TCP连接进入时会执行onConnect事件回调，当某个连接向服务器发送数据时会回调onReceive函数。客户端主动断开连接，会触发onClose事件回调。</p>
+<h4 id="构建Server对象-1"><a href="#构建Server对象-1" class="headerlink" title="构建Server对象"></a>构建Server对象</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$serv = new swoole_server(&quot;127.0.0.1&quot;, 9501, SWOOLE_BASE, SWOOLE_SOCK_TCP);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>$mode运行的模式，swoole提供了<a href="https://wiki.swoole.com/wiki/page/353.html" target="_blank" rel="noopener">3种运行模式</a>，默认为多进程模式</li>
+<li>$sock_type指定socket的类型，支持TCP/UDP、TCP6/UDP6、UnixSock Stream/Dgram 6种<h4 id="设置运行时参数-1"><a href="#设置运行时参数-1" class="headerlink" title="设置运行时参数"></a>设置运行时参数</h4></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$serv-&gt;set(array(</span><br><span class="line">    &apos;reactor_num&apos; =&gt; 2, //通过此参数来调节poll线程的数量，以充分利用多核。reactor_num和writer_num默认设置为CPU核数</span><br><span class="line">    &apos;worker_num&apos; =&gt; 4, //设置启动的worker进程数量。swoole采用固定worker进程的模式。PHP代码中是全异步非阻塞，worker_num配置为CPU核数的1-4倍即可。如果是同步阻塞，worker_num配置为100或者更高</span><br><span class="line">    &apos;max_conn&apos; =&gt; 10000, //最大tcp连接</span><br><span class="line">    &apos;max_request&apos; =&gt; 50, //此参数表示worker进程在处理完n次请求后结束运行。manager会重新创建一个worker进程。此选项用来防止worker进程内存溢出。</span><br><span class="line">    &apos;daemonize&apos; =&gt; true, //守护进程化</span><br><span class="line">    &apos;backlog&apos; =&gt; 128, //Listen队列长度.此参数将决定最多同时有多少个待accept的连接，swoole本身accept效率是很高的，基本上不会出现大量排队情况。</span><br><span class="line">    &apos;log_file&apos; =&gt; &apos;/data/log/swoole.log&apos; //日志</span><br><span class="line">));</span><br></pre></td></tr></table></figure>
+<h4 id="属性列表-1"><a href="#属性列表-1" class="headerlink" title="属性列表"></a>属性列表</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$serv-&gt;setting;  //set()函数所设置的参数会保存到$setting属性上。</span><br><span class="line">$serv-&gt;manager_pid; //管理进程的PID，通过向管理进程发送SIGUSR1信号可实现柔性重启</span><br><span class="line">$serv-&gt;master_pid; //主进程的PID，通过向主进程发送SIGTERM信号可安全关闭服务器</span><br><span class="line">$serv-&gt;worker_id;  //得到当前Worker进程的编号，包括Task进程。</span><br><span class="line">$serv-&gt;worker_pid; //得到当前Worker进程的操作系统进程ID</span><br><span class="line">$serv-&gt;connections; //当前服务器的客户端连接，可使用foreach遍历所有连接</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>==工作进程重启后worker_id的值是不变的==</p>
+</blockquote>
+<h4 id="注册事件回调函数-1"><a href="#注册事件回调函数-1" class="headerlink" title="注册事件回调函数"></a>注册事件回调函数</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$serv-&gt;on(&apos;Connect&apos;, &apos;my_onConnect&apos;);</span><br><span class="line">$serv-&gt;on(&apos;Receive&apos;, &apos;my_onReceive&apos;);</span><br><span class="line">$serv-&gt;on(&apos;Close&apos;, &apos;my_onClose&apos;);</span><br><span class="line">$serv-&gt;on(&apos;Task&apos;, &apos;my_onTask&apos;);//处理异步任务</span><br><span class="line">$serv-&gt;on(&apos;Finish&apos;, &apos;my_onFinish&apos;);//返回处理异步任务的结果</span><br></pre></td></tr></table></figure>
+<p>PHP中可以使用<a href="https://wiki.swoole.com/wiki/page/458.html" target="_blank" rel="noopener">4种回调函数</a>的风格,我个人比较倾向函数式。</p>
+<h3 id="编程须知：-1"><a href="#编程须知：-1" class="headerlink" title="编程须知："></a>编程须知：</h3><ul>
+<li>在异步IO的程序中，不得使用sleep/usleep/time_sleep_until/time_nanosleep</li>
+</ul>
+<p>onReceive事件中执行了sleep函数，server在100秒内无法再收到任何客户端请求。</p>
+<ul>
+<li>在swoole程序中禁止使用exit/die，如果PHP代码中有exit/die，当前工作的Worker进程、Task进程、User进程、以及swoole_process进程会立即退出。</li>
+</ul>
+<p>建议使用try/catch的方式替换exit/die，实现中断执行跳出PHP函数调用栈。</p>
 
       
     </div>
@@ -423,7 +450,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/PHP包管理工具/" rel="tag"># PHP包管理工具</a>
+            <a href="/tags/PHP/" rel="tag"># PHP</a>
+          
+            <a href="/tags/swoole/" rel="tag"># swoole</a>
           
         </div>
       
@@ -436,8 +465,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/11/17/interface/" rel="next" title="抽象类和接口的区别">
-                <i class="fa fa-chevron-left"></i> 抽象类和接口的区别
+              <a href="/2017/07/05/mysql-transaction-level/" rel="next" title="数据库的事务隔离级别">
+                <i class="fa fa-chevron-left"></i> 数据库的事务隔离级别
               </a>
             
           </div>
@@ -446,8 +475,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/04/04/elk/" rel="prev" title="Elasticsearch 安装配置">
-                Elasticsearch 安装配置 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/11/05/mysql-specification/" rel="prev" title="Mysql规范">
+                Mysql规范 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -600,7 +629,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Composer"><span class="nav-number">1.</span> <span class="nav-text">Composer</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux安装"><span class="nav-number">1.2.</span> <span class="nav-text">Linux安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用"><span class="nav-number">1.3.</span> <span class="nav-text">使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#声明依赖关系"><span class="nav-number">1.3.0.1.</span> <span class="nav-text">声明依赖关系</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装依赖包-install"><span class="nav-number">1.3.0.2.</span> <span class="nav-text">安装依赖包 - install</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#composer-lock-锁文件"><span class="nav-number">1.3.0.3.</span> <span class="nav-text">composer.lock - 锁文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#更新-update"><span class="nav-number">1.3.0.4.</span> <span class="nav-text">更新 - update</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自动加载"><span class="nav-number">1.4.</span> <span class="nav-text">自动加载</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Server"><span class="nav-number">1.</span> <span class="nav-text">Server</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#运行流程图"><span class="nav-number">1.0.1.</span> <span class="nav-text">运行流程图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进程-线程结构图"><span class="nav-number">1.0.2.</span> <span class="nav-text">进程/线程结构图</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建TCP-Server-示例代码"><span class="nav-number">1.0.2.1.</span> <span class="nav-text">创建TCP Server 示例代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#构建Server对象"><span class="nav-number">1.0.2.2.</span> <span class="nav-text">构建Server对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置运行时参数"><span class="nav-number">1.0.2.3.</span> <span class="nav-text">设置运行时参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#属性列表"><span class="nav-number">1.0.2.4.</span> <span class="nav-text">属性列表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#注册事件回调函数"><span class="nav-number">1.0.2.5.</span> <span class="nav-text">注册事件回调函数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编程须知："><span class="nav-number">1.0.3.</span> <span class="nav-text">编程须知：</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#Server-1"><span class="nav-number">2.</span> <span class="nav-text">Server</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#运行流程图-1"><span class="nav-number">2.0.1.</span> <span class="nav-text">运行流程图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进程-线程结构图-1"><span class="nav-number">2.0.2.</span> <span class="nav-text">进程/线程结构图</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建TCP-Server-示例代码-1"><span class="nav-number">2.0.2.1.</span> <span class="nav-text">创建TCP Server 示例代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#构建Server对象-1"><span class="nav-number">2.0.2.2.</span> <span class="nav-text">构建Server对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置运行时参数-1"><span class="nav-number">2.0.2.3.</span> <span class="nav-text">设置运行时参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#属性列表-1"><span class="nav-number">2.0.2.4.</span> <span class="nav-text">属性列表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#注册事件回调函数-1"><span class="nav-number">2.0.2.5.</span> <span class="nav-text">注册事件回调函数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编程须知：-1"><span class="nav-number">2.0.3.</span> <span class="nav-text">编程须知：</span></a></li></ol></li></div>
             
 
           </div>
