@@ -82,14 +82,14 @@
 <meta name="description" content="一、基础规范表存储引擎必须使用InnoDB解读：线上 DB 统一使用 InnoDB 存储引擎，线下统计类从库也可用Ｍyisam 引擎 表字符集默认使用utf8mb4，而不是utf8解读：（1）通用，无乱码风险，汉字3字节，英文1字节（2）utf8mb4是utf8的超集，emoji表情以及部分不常见汉字在utf8下会表现为乱码 禁止使用存储过程，视图，触发器，Event解读：（1）对数据库性能影响较">
 <meta name="keywords" content="MySQL">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Mysql规范">
+<meta property="og:title" content="MySQL规范">
 <meta property="og:url" content="http://yoursite.com/2017/11/05/mysql-specification/index.html">
 <meta property="og:site_name" content="KevinShin&#39;s Blog">
 <meta property="og:description" content="一、基础规范表存储引擎必须使用InnoDB解读：线上 DB 统一使用 InnoDB 存储引擎，线下统计类从库也可用Ｍyisam 引擎 表字符集默认使用utf8mb4，而不是utf8解读：（1）通用，无乱码风险，汉字3字节，英文1字节（2）utf8mb4是utf8的超集，emoji表情以及部分不常见汉字在utf8下会表现为乱码 禁止使用存储过程，视图，触发器，Event解读：（1）对数据库性能影响较">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-06T07:33:04.584Z">
+<meta property="og:updated_time" content="2018-11-07T13:47:07.156Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Mysql规范">
+<meta name="twitter:title" content="MySQL规范">
 <meta name="twitter:description" content="一、基础规范表存储引擎必须使用InnoDB解读：线上 DB 统一使用 InnoDB 存储引擎，线下统计类从库也可用Ｍyisam 引擎 表字符集默认使用utf8mb4，而不是utf8解读：（1）通用，无乱码风险，汉字3字节，英文1字节（2）utf8mb4是utf8的超集，emoji表情以及部分不常见汉字在utf8下会表现为乱码 禁止使用存储过程，视图，触发器，Event解读：（1）对数据库性能影响较">
 
 
@@ -126,7 +126,7 @@
 
 
 
-  <title>Mysql规范 | KevinShin's Blog</title>
+  <title>MySQL规范 | KevinShin's Blog</title>
   
 
 
@@ -302,7 +302,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Mysql规范</h1>
+          <h1 class="post-title" itemprop="name headline">MySQL规范</h1>
         
 
         <div class="post-meta">
@@ -401,8 +401,6 @@
 <p>同一个字段上的OR必须改写问IN，IN的值必须少于50个<br>解读：旧版本Mysql的OR查询是不能命中索引的，即使能命中索引，为何要让数据库耗费更多的CPU帮助实施查询优化呢？</p>
 <p>应用程序必须捕获SQL异常<br>使用 EXPLAIN 判断 SQL 语句是否合理使用索引<br>force–index（对于单独条件如果走不了索引，强要强制指定索引）<br>拆分复杂 SQL 为多个小 SQL，避免大事务<br>减少与数据库交互次数，尽量采用批量 SQL 语句<br>获取大量数据时，建议分批次获取数据，每次获取数据少于 2000 条，结果集应小于 1M<br>Myisam 引擎统计行数用 COUNT(*)。InnoDB 引擎统计行数用 COUNT(主键 id）<br>建议使用合理的分页方式以提高分页效率<br>解读：方便定位线上问题</p>
 <h3 id="七、行为规范"><a href="#七、行为规范" class="headerlink" title="七、行为规范"></a>七、行为规范</h3><p>禁止使用应用程序配置文件内的帐号手工访问线上数据库<br>禁止非DBA对线上数据库进行写操作，修改线上数据需要提交工单，由DBA执行，提交的SQL语句必须经过测试<br>分配非DBA以只读帐号，必须通过VPN+跳板机访问授权的从库<br>开发、测试、线上环境隔离<br>禁止有 super 权限、DDL、DCL 权限的应用程序账号存在<br>表结构变更必须通知 DBA 进行审核，大表 DDL 操作提前一天发送需求，避免大于 5000 万行记录的表进行 DDL 操作，除开特殊情况<br>不要在 MySQL 数据库中存放业务逻辑<br>master 上面，除了业务需要实时查询的 select，其它的 select 必须放在slave 上面<br>统计相关，后台查询相关的 select，禁止放在线上从库上面。这种类型的统一放在线下的统计从库上面</p>
-<p>说明：本军规适用于并发量大，数据量大的典型互联网业务，可直接带走参考，不谢。</p>
-<p>军规练习：为什么下列SQL不能命中phone索引？<br>select uid from user where phone=13811223344<br>phone是varchar类型，SQL语句带入的是整形，故不会命中索引，加个引号就好了：<br>SELECT uid FROM t_user WHERE phone=’13812345678’</p>
 <p>参考文章：<br><a href="https://cloud.tencent.com/developer/article/1004367" target="_blank" rel="noopener">https://cloud.tencent.com/developer/article/1004367</a><br><a href="https://mp.weixin.qq.com/s/YfCORbcCX1hymXBCrZbAZg" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/YfCORbcCX1hymXBCrZbAZg</a><br><a href="https://mp.weixin.qq.com/s?__biz=MjM5ODYxMDA5OQ==&amp;mid=2651959906&amp;idx=1&amp;sn=2cbdc66cfb5b53cf4327a1e0d18d9b4a&amp;chksm=bd2d07be8a5a8ea86dc3c04eced3f411ee5ec207f73d317245e1fefea1628feb037ad71531bc&amp;scene=21#wechat_redirect" target="_blank" rel="noopener">https://mp.weixin.qq.com/s?__biz=MjM5ODYxMDA5OQ==&amp;mid=2651959906&amp;idx=1&amp;sn=2cbdc66cfb5b53cf4327a1e0d18d9b4a&amp;chksm=bd2d07be8a5a8ea86dc3c04eced3f411ee5ec207f73d317245e1fefea1628feb037ad71531bc&amp;scene=21#wechat_redirect</a><br><a href="https://mp.weixin.qq.com/s?__biz=MjM5ODYxMDA5OQ==&amp;mid=2651959910&amp;idx=1&amp;sn=6b6853b70dbbe6d689a12a4a60b84d8b&amp;chksm=bd2d07ba8a5a8eac6783bac951dba345d865d875538755fe665a5daaf142efe670e2c02b7c71&amp;scene=21#wechat_redirect" target="_blank" rel="noopener">https://mp.weixin.qq.com/s?__biz=MjM5ODYxMDA5OQ==&amp;mid=2651959910&amp;idx=1&amp;sn=6b6853b70dbbe6d689a12a4a60b84d8b&amp;chksm=bd2d07ba8a5a8eac6783bac951dba345d865d875538755fe665a5daaf142efe670e2c02b7c71&amp;scene=21#wechat_redirect</a></p>
 
       
