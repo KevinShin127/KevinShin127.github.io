@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="MQ,">
 
 
 
@@ -79,16 +79,24 @@
 
 
 
-<meta name="description" content="Later Equals Never.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="KevinShin&#39;s Blog">
-<meta property="og:url" content="http://yoursite.com/tags/PHP/index.html">
+<meta name="description" content="介绍MQ算是我们日常开发过程中使用最多最频繁之一的中间件了。这里对MQ的特点和使用场景做下简单介绍总结。 什么是MQ消息队列（Message Queue）简称MQ，是一种跨进程的通信机制，常用于上下游“逻辑解耦+物理解耦”的消息通信服务。上下游的关系可以理解为发布-订阅模式。 MQ的优势和不足优势： 1）同步调用改异步，提高性能 2）解决业务的相互依赖，解耦 3）可以控制下游服务的执行效率，达到缓">
+<meta name="keywords" content="MQ">
+<meta property="og:type" content="article">
+<meta property="og:title" content="消息队列MQ">
+<meta property="og:url" content="http://yoursite.com/2018/03/08/mq/index.html">
 <meta property="og:site_name" content="KevinShin&#39;s Blog">
-<meta property="og:description" content="Later Equals Never.">
+<meta property="og:description" content="介绍MQ算是我们日常开发过程中使用最多最频繁之一的中间件了。这里对MQ的特点和使用场景做下简单介绍总结。 什么是MQ消息队列（Message Queue）简称MQ，是一种跨进程的通信机制，常用于上下游“逻辑解耦+物理解耦”的消息通信服务。上下游的关系可以理解为发布-订阅模式。 MQ的优势和不足优势： 1）同步调用改异步，提高性能 2）解决业务的相互依赖，解耦 3）可以控制下游服务的执行效率，达到缓">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://mmbiz.qpic.cn/mmbiz_png/YrezxckhYOy4obqALqknSGsZ60Oa1quV4cJ1LPvPcQLdqtcjRgiaOZ09XcGa4zliaSDwicQicQiaS0XPOaibASP8XS3Q/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1">
+<meta property="og:image" content="http://mmbiz.qpic.cn/mmbiz_png/YrezxckhYOy4obqALqknSGsZ60Oa1quVcNHvEdFcWEiaIH4DukOAJa175AWkxA69v9Tib8EAXuGyZibjp5VLzPibsg/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1">
+<meta property="og:image" content="http://mmbiz.qpic.cn/mmbiz_png/YrezxckhYOy4obqALqknSGsZ60Oa1quVfuWic1wEyXhdccYlI0ibSz5tu4ByOzNNecHAicSSICx5Osvys6VZ7c2cg/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1">
+<meta property="og:image" content="http://mmbiz.qpic.cn/mmbiz_png/YrezxckhYOy4obqALqknSGsZ60Oa1quV37p613Qdp5E8D5JU4iaBj77yBzd65deWXXG0wtW55IhqVx0KQlh2LKw/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1">
+<meta property="og:image" content="http://mmbiz.qpic.cn/mmbiz_png/YrezxckhYOy4obqALqknSGsZ60Oa1quVeeia3f2WdYK4NxjNRCj5aorJKZxoUGJPiaTuVIcuCTFYyVoicZmS3n98g/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1">
+<meta property="og:updated_time" content="2018-11-08T08:13:12.358Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="KevinShin&#39;s Blog">
-<meta name="twitter:description" content="Later Equals Never.">
+<meta name="twitter:title" content="消息队列MQ">
+<meta name="twitter:description" content="介绍MQ算是我们日常开发过程中使用最多最频繁之一的中间件了。这里对MQ的特点和使用场景做下简单介绍总结。 什么是MQ消息队列（Message Queue）简称MQ，是一种跨进程的通信机制，常用于上下游“逻辑解耦+物理解耦”的消息通信服务。上下游的关系可以理解为发布-订阅模式。 MQ的优势和不足优势： 1）同步调用改异步，提高性能 2）解决业务的相互依赖，解耦 3）可以控制下游服务的执行效率，达到缓">
+<meta name="twitter:image" content="http://mmbiz.qpic.cn/mmbiz_png/YrezxckhYOy4obqALqknSGsZ60Oa1quV4cJ1LPvPcQLdqtcjRgiaOZ09XcGa4zliaSDwicQicQiaS0XPOaibASP8XS3Q/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1">
 
 
 
@@ -118,13 +126,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/PHP/">
+  <link rel="canonical" href="http://yoursite.com/2018/03/08/mq/">
 
 
 
 
 
-  <title>标签: PHP | KevinShin's Blog</title>
+  <title>消息队列MQ | KevinShin's Blog</title>
   
 
 
@@ -143,7 +151,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -269,78 +277,205 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>PHP<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/08/mq/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="KevinShin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="KevinShin's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2017/07/07/swoole/" itemprop="url">
-              
-                <span itemprop="name">初识swoole</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">消息队列MQ</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2017-07-07T21:19:54+08:00" content="2017-07-07">
-          07-07
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-08T16:01:48+08:00">
+                2018-03-08
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/中间件/" itemprop="url" rel="index">
+                    <span itemprop="name">中间件</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
+      
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2015/11/17/interface/" itemprop="url">
-              
-                <span itemprop="name">抽象类和接口的区别</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2015-11-17T21:11:18+08:00" content="2015-11-17">
-          11-17
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+      
+        <h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>MQ算是我们日常开发过程中使用最多最频繁之一的中间件了。这里对MQ的特点和使用场景做下简单介绍总结。</p>
+<h3 id="什么是MQ"><a href="#什么是MQ" class="headerlink" title="什么是MQ"></a>什么是MQ</h3><p>消息队列（Message Queue）简称MQ，是一种跨进程的通信机制，常用于上下游“逻辑解耦+物理解耦”的消息通信服务。上下游的关系可以理解为发布-订阅模式。<br><img src="http://mmbiz.qpic.cn/mmbiz_png/YrezxckhYOy4obqALqknSGsZ60Oa1quV4cJ1LPvPcQLdqtcjRgiaOZ09XcGa4zliaSDwicQicQiaS0XPOaibASP8XS3Q/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="image"></p>
+<h3 id="MQ的优势和不足"><a href="#MQ的优势和不足" class="headerlink" title="MQ的优势和不足"></a>MQ的优势和不足</h3><p>优势：</p>
+<p>1）同步调用改异步，提高性能</p>
+<p>2）解决业务的相互依赖，解耦</p>
+<p>3）可以控制下游服务的执行效率，达到缓冲流量、削峰填谷的目的</p>
+<p>MQ的不足：</p>
+<p>1）上游无法知道下游的执行结果。这一点是最重要的，<br><strong>因此很多需要实时调用返回执行结果的业务场景，是无法使用MQ的。</strong></p>
+<p>2）系统更复杂，多了一个MQ组件</p>
+<p>3）消息传递路径更长，延时会增加</p>
+<p>4）消息可靠性和重复性互为矛盾，消息不丢不重难以同时保证</p>
+<h3 id="MQ的应用场景"><a href="#MQ的应用场景" class="headerlink" title="MQ的应用场景"></a>MQ的应用场景</h3><p>MQ主要应用于异步解耦、削峰填谷等，在一些上游服务不需要实时获取下游服务的执行结果的场景中频繁使用。</p>
+<h4 id="应用一：高并发下的缓冲流量、削峰填谷"><a href="#应用一：高并发下的缓冲流量、削峰填谷" class="headerlink" title="应用一：高并发下的缓冲流量、削峰填谷"></a>应用一：高并发下的缓冲流量、削峰填谷</h4><p>比如秒杀抢购等高并发写库场景，如果在接口程序中实时写库操作，可能会对数据库造成极大压力而导致崩溃，优化方案之一，就是对提交的数据校验成功后将其推到MQ，再调取下游写库服务，以此来控制写库频率。值得注意的是，这套流程还需要注意写库服务失败后处理，比如写库失败直接扔回queue还是触发另外的机制等。</p>
+<h4 id="应用二：上游不关心下游执行结果，异步调用，提高性能"><a href="#应用二：上游不关心下游执行结果，异步调用，提高性能" class="headerlink" title="应用二：上游不关心下游执行结果，异步调用，提高性能"></a>应用二：上游不关心下游执行结果，异步调用，提高性能</h4><p>这个也是在我们接口开发中使用比较多的场景。因为接口的性能都会要求比较高，业务很复杂的情况下，很多不需要在实时返回接口的业务程序，一般都会拆离出去，通过MQ异步调用。</p>
+<p>单线程同步调用时：上游-&gt;下游1-&gt;下游2-&gt;下游3</p>
+<p>通过MQ异步调用：<br><img src="http://mmbiz.qpic.cn/mmbiz_png/YrezxckhYOy4obqALqknSGsZ60Oa1quVcNHvEdFcWEiaIH4DukOAJa175AWkxA69v9Tib8EAXuGyZibjp5VLzPibsg/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="image"></p>
+<p>【场景1：发帖】<br>比如58同城招聘用户发布帖子后，招聘业务要奖励58豆，房产用户发布帖子后，房产业务要送2个置顶，二手用户发布帖子后，二手业务要修改用户统计数据。</p>
+<h4 id="应用三：解决任务依赖，解耦"><a href="#应用三：解决任务依赖，解耦" class="headerlink" title="应用三：解决任务依赖，解耦"></a>应用三：解决任务依赖，解耦</h4><p>举个栗子，互联网公司经常在凌晨进行一些数据统计任务，这些任务之间有一定的依赖关系，比如：</p>
+<p>1）task3需要使用task2的输出作为输入</p>
+<p>2）task2需要使用task1的输出作为输入</p>
+<p>这样的话，tast1, task2, task3之间就有任务依赖关系，必须task1先执行，再task2执行，载task3执行。</p>
+<p><img src="http://mmbiz.qpic.cn/mmbiz_png/YrezxckhYOy4obqALqknSGsZ60Oa1quVfuWic1wEyXhdccYlI0ibSz5tu4ByOzNNecHAicSSICx5Osvys6VZ7c2cg/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="image"></p>
+<p>MQ解耦：</p>
+<p><img src="http://mmbiz.qpic.cn/mmbiz_png/YrezxckhYOy4obqALqknSGsZ60Oa1quV37p613Qdp5E8D5JU4iaBj77yBzd65deWXXG0wtW55IhqVx0KQlh2LKw/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="image"></p>
+<p>【场景2：下订单】<br>通常电商的订单系统跟仓库系统等都是分离的，用户下订单之后，无需关注后续仓库物流打包等操作，通过MQ解耦</p>
+<p>我司的push系统也是采用这种方式来实现的。值得注意的是这套方案，会导致<strong>系统格外复杂，代码分散，维护的成本非常高</strong>。</p>
+<h4 id="应用四：上游关注执行结果，但执行时间很长"><a href="#应用四：上游关注执行结果，但执行时间很长" class="headerlink" title="应用四：上游关注执行结果，但执行时间很长"></a>应用四：上游关注执行结果，但执行时间很长</h4><p> 有时候上游需要关注执行结果，但执行结果时间很长（典型的是调用离线处理，或者跨公网调用），也经常使用回调网关+MQ来解耦。</p>
+<p>举个栗子，微信支付，跨公网调用微信的接口，执行时间会比较长，但调用方又非常关注执行结果，此时一般怎么玩呢？</p>
+<p><img src="http://mmbiz.qpic.cn/mmbiz_png/YrezxckhYOy4obqALqknSGsZ60Oa1quVeeia3f2WdYK4NxjNRCj5aorJKZxoUGJPiaTuVIcuCTFYyVoicZmS3n98g/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="image"></p>
+<p>一般采用“回调网关+MQ”方案来解耦：</p>
+<p>1）调用方直接跨公网调用微信接口</p>
+<p>2）微信返回调用成功，此时并不代表返回成功</p>
+<p>3）微信执行完成后，回调统一网关</p>
+<p>4）网关将返回结果通知MQ</p>
+<p>5）请求方收到结果通知</p>
+<p>这里需要注意的是，不应该由回调网关来调用上游来通知结果，如果是这样的话，每次新增调用方，回调网关都需要修改代码，仍然会反向依赖，使用回调网关+MQ的方案，新增任何对微信支付的调用，都不需要修改代码啦。</p>
+<h3 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h3><p>MQ是异步解耦，削峰填谷的利器。</p>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MQ/" rel="tag"># MQ</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/05/mysql-specification/" rel="next" title="MySQL规范">
+                <i class="fa fa-chevron-left"></i> MySQL规范
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -348,6 +483,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -368,8 +507,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -449,6 +597,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是MQ"><span class="nav-number">2.</span> <span class="nav-text">什么是MQ</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MQ的优势和不足"><span class="nav-number">3.</span> <span class="nav-text">MQ的优势和不足</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MQ的应用场景"><span class="nav-number">4.</span> <span class="nav-text">MQ的应用场景</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#应用一：高并发下的缓冲流量、削峰填谷"><span class="nav-number">4.1.</span> <span class="nav-text">应用一：高并发下的缓冲流量、削峰填谷</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#应用二：上游不关心下游执行结果，异步调用，提高性能"><span class="nav-number">4.2.</span> <span class="nav-text">应用二：上游不关心下游执行结果，异步调用，提高性能</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#应用三：解决任务依赖，解耦"><span class="nav-number">4.3.</span> <span class="nav-text">应用三：解决任务依赖，解耦</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#应用四：上游关注执行结果，但执行时间很长"><span class="nav-number">4.4.</span> <span class="nav-text">应用四：上游关注执行结果，但执行时间很长</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结："><span class="nav-number">5.</span> <span class="nav-text">总结：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -582,6 +746,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
