@@ -315,7 +315,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-15T22:05:35+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-15T22:09:10+08:00">
                 2019-04-15
               </time>
             
@@ -355,13 +355,12 @@
       
         
           
-          
-title: PHP数组结构的演变
-date: 2018-8-17 21:36:36一. PHP数组结构的演变这个地方主要讲PHP5.6=&gt;PHP7.0=&gt;PHP7.1的演变过程
+          一. PHP数组结构的演变这个地方主要讲PHP5.6=&gt;PHP7.0=&gt;PHP7.1的演变过程
 
 我们可以看到，数组本质就是一个hashtable结构，左侧的0~nTablemask便是hash下标，而后面有一个双向链表，便是我们通常所说的hash冲突的链地址法。
 而绿色的双向链表，则是foreach遍历用的，这个地方用双向链表，主要是为了逆序访问来用的，遍历的时候，就是从pListHead开始不断的next便可以遍历所有的元素。这样要比下标遍历hashtable快得多。
-但是这个结构有很明显的缺
+但是这个结构有很明显的缺点：
+①. 每次插入/删除元素都要申请/释放内存，这样会严重的导致内存碎片化，降低内存
           ...
           <!--noindex-->
           <div class="post-button text-center">
