@@ -79,16 +79,19 @@
 
 
 
-<meta name="description" content="Later Equals Never.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="KevinShin&#39;s Blog">
-<meta property="og:url" content="http://yoursite.com/archives/2017/10/index.html">
+<meta name="description" content="缓存系统是我们平时开发经常使用到的，也是在高并发场景下减少或防止流量对DB等底层系统冲击的最有效手段之一。下面就简单谈谈缓存系统经常提及的三个问题以及解决方案。 缓存穿透首先回忆下通常情况我们设置的缓存机制，如下图所示：这套机制，由于出于容错考虑，从存储层查不到数据则不写入缓存，这就导致每次请求不存在的数据时都要到存储层去查询。如果有黑客可以利用不存在的key，频繁请求我们的服务器，这些请求就会穿">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅谈缓存穿透、缓存雪崩和缓存击穿">
+<meta property="og:url" content="http://yoursite.com/2018/01/06/缓存穿透/index.html">
 <meta property="og:site_name" content="KevinShin&#39;s Blog">
-<meta property="og:description" content="Later Equals Never.">
+<meta property="og:description" content="缓存系统是我们平时开发经常使用到的，也是在高并发场景下减少或防止流量对DB等底层系统冲击的最有效手段之一。下面就简单谈谈缓存系统经常提及的三个问题以及解决方案。 缓存穿透首先回忆下通常情况我们设置的缓存机制，如下图所示：这套机制，由于出于容错考虑，从存储层查不到数据则不写入缓存，这就导致每次请求不存在的数据时都要到存储层去查询。如果有黑客可以利用不存在的key，频繁请求我们的服务器，这些请求就会穿">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2281730-fc258339bc9475c0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-04-15T14:01:57.487Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="KevinShin&#39;s Blog">
-<meta name="twitter:description" content="Later Equals Never.">
+<meta name="twitter:title" content="浅谈缓存穿透、缓存雪崩和缓存击穿">
+<meta name="twitter:description" content="缓存系统是我们平时开发经常使用到的，也是在高并发场景下减少或防止流量对DB等底层系统冲击的最有效手段之一。下面就简单谈谈缓存系统经常提及的三个问题以及解决方案。 缓存穿透首先回忆下通常情况我们设置的缓存机制，如下图所示：这套机制，由于出于容错考虑，从存储层查不到数据则不写入缓存，这就导致每次请求不存在的数据时都要到存储层去查询。如果有黑客可以利用不存在的key，频繁请求我们的服务器，这些请求就会穿">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/2281730-fc258339bc9475c0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -118,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/archives/2017/10/">
+  <link rel="canonical" href="http://yoursite.com/2018/01/06/缓存穿透/">
 
 
 
 
 
-  <title>归档 | KevinShin's Blog</title>
+  <title>浅谈缓存穿透、缓存雪崩和缓存击穿 | KevinShin's Blog</title>
   
 
 
@@ -143,7 +146,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -269,72 +272,156 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
-
-      <span class="archive-page-counter">
-        
-        
-        
-          
-        
-        嗯..! 目前共计 17 篇日志。 继续努力。
-      </span>
-
-      
-
-        
-        
-        
-
-        
-          
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2017">2017</h1>
-          </div>
-        
-        
-
-        
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/06/缓存穿透/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="KevinShin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="KevinShin's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2017/10/06/缓存穿透/" itemprop="url">
-              
-                <span itemprop="name">浅谈缓存穿透、缓存雪崩和缓存击穿</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">浅谈缓存穿透、缓存雪崩和缓存击穿</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2017-10-06T19:59:53+08:00" content="2017-10-06">
-          10-06
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-06T19:59:53+08:00">
+                2018-01-06
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
 
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
+      
 
+      
+        <p>缓存系统是我们平时开发经常使用到的，也是在高并发场景下减少或防止流量对DB等底层系统冲击的最有效手段之一。下面就简单谈谈缓存系统经常提及的三个问题以及解决方案。</p>
+<h3 id="缓存穿透"><a href="#缓存穿透" class="headerlink" title="缓存穿透"></a>缓存穿透</h3><p>首先回忆下通常情况我们设置的缓存机制，如下图所示：<br><img src="http://upload-images.jianshu.io/upload_images/2281730-fc258339bc9475c0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="缓存加载机制"><br>这套机制，由于出于容错考虑，从存储层查不到数据则不写入缓存，这就导致每次请求不存在的数据时都要到存储层去查询。如果有黑客可以利用不存在的key，频繁请求我们的服务器，这些请求就会穿透缓存，直接打到DB上，对DB造成巨大压力甚至挂掉。这就是缓存穿透。</p>
+<h5 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h5><p>有很多种方法可以有效地解决缓存穿透问题，最常见的则是采用<strong>布隆过滤器</strong>（bloom filter）。</p>
+<p>布隆过滤器是将所有可能存在的数据哈希到一个足够大的bitmap中，一个一定不存在的数据会被 这个bitmap拦截掉，从而避免了对底层存储系统的查询压力。</p>
+<p>另外一个更为简单粗暴的方法，如果一个查询结果空（不管是数 据不存在，还是查询异常），我们仍然把这个空结果进行缓存，但它的过期时间会很短，几分钟即可。</p>
+<h3 id="缓存雪崩"><a href="#缓存雪崩" class="headerlink" title="缓存雪崩"></a>缓存雪崩</h3><p>缓存雪崩是指在如果我们几乎在同一时间设置的缓存（比如缓存预热），并且设置了相同的过期时间，这就会导致缓存会在某一时刻同时失效，这个时间所有请求会全部转发到DB，DB瞬时压力过重雪崩。</p>
+<h5 id="解决方案-1"><a href="#解决方案-1" class="headerlink" title="解决方案"></a>解决方案</h5><p>大多数系统设计者考虑用加锁或者队列的方式保证缓存的单线 程（进程）写，从而避免失效时大量的并发请求落到底层存储系统上。另一个简单的方案就是我们可以在原有的失效时间基础上增加一个随机值，让缓存的失效时间错开，就可以有效的避免缓存雪崩。</p>
+<h3 id="缓存击穿"><a href="#缓存击穿" class="headerlink" title="缓存击穿"></a>缓存击穿</h3><p>缓存击穿跟缓存雪崩类似，区别就是缓存雪崩是群体失效，缓存击穿是单体失效，比如一个非常热点的数据。比较典型的场景就是新浪微博的热点事件，比如鹿晗和关晓彤事件，因为超高并发的访问，如果这个时间点缓存过期，在系统从后端DB加载数据到缓存这个过程中，这段时间超大并发的请求会同时打到DB上，很有可能瞬间把DB压垮。<a href="https://yq.aliyun.com/articles/290865" target="_blank" rel="noopener">相关推荐阅读：双11万亿流量下的分布式缓存</a></p>
+<h5 id="解决方案-2"><a href="#解决方案-2" class="headerlink" title="解决方案"></a>解决方案</h5><h6 id="1-使用互斥锁（mutex-lock-："><a href="#1-使用互斥锁（mutex-lock-：" class="headerlink" title="1.使用互斥锁（mutex lock)："></a>1.使用互斥锁（mutex lock)：</h6><p>简单地来说，就是在缓存失效的时候，不是直接请求DB，而是先加分布式锁（比如redis的setNx），如果加锁成功，再进行load db的操作并回设缓存；如果加锁失败，说明已经有别的进程在加锁重设缓存，我们只需要等待重试或者直接返回客户端失败让用户手动重试。</p>
+<p>这是比较简单，也是很常用的一种解决方式。值得注意的是，我们加锁的时候一定要设置过期时间（如redis的expire），否则会有死锁的风险。</p>
+<h6 id="2-提前更新缓存："><a href="#2-提前更新缓存：" class="headerlink" title="2. 提前更新缓存："></a>2. 提前更新缓存：</h6><p>上面一种方案，因为用户是有感知的，如果不想影响用户体验，可以进一步优化为对缓存加标，并记录它的过期时间，当我们读取缓存的时候，先判断它是否快到过期时间，如果是则在返回缓存数据的同时，后台异步请求DB重设缓存，更新它的过期时间。而如果我们获取缓存是缓存已经过期，则还需要我们按照上一个方案处理。</p>
+<h6 id="3-“永不失效”："><a href="#3-“永不失效”：" class="headerlink" title="3. “永不失效”："></a>3. “永不失效”：</h6><p>在上面情况下，我们进一步思考，如果我们设置缓存的过期时间非常长（比如3天），同时我们对缓存加标记录设置缓存的时间，每次我们读取缓存的时候，拿到设置缓存的时间跟现在的时间做比对，如果相差时间超过10分钟，我们在后台异步更新缓存。这样对于热点数据而言，就相当于缓存“永不失效”了。</p>
+
+      
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/05/MySQL规范/" rel="next" title="MySQL规范">
+                <i class="fa fa-chevron-left"></i> MySQL规范
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/04/RabbitMQ-PHPClient/" rel="prev" title="RabbitMQ（二）：安装 和 PHP Client">
+                RabbitMQ（二）：安装 和 PHP Client <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -342,6 +429,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -362,8 +453,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -443,6 +543,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#缓存穿透"><span class="nav-number">1.</span> <span class="nav-text">缓存穿透</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#解决方案"><span class="nav-number">1.0.1.</span> <span class="nav-text">解决方案</span></a></li></ol></li></ol><li class="nav-item nav-level-3"><a class="nav-link" href="#缓存雪崩"><span class="nav-number">2.</span> <span class="nav-text">缓存雪崩</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#解决方案-1"><span class="nav-number">2.0.1.</span> <span class="nav-text">解决方案</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缓存击穿"><span class="nav-number">3.</span> <span class="nav-text">缓存击穿</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#解决方案-2"><span class="nav-number">3.0.1.</span> <span class="nav-text">解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-使用互斥锁（mutex-lock-："><span class="nav-number">3.0.1.1.</span> <span class="nav-text">1.使用互斥锁（mutex lock)：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-提前更新缓存："><span class="nav-number">3.0.1.2.</span> <span class="nav-text">2. 提前更新缓存：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-“永不失效”："><span class="nav-number">3.0.1.3.</span> <span class="nav-text">3. “永不失效”：</span></a></li></ol></li></ol></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -576,6 +692,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
