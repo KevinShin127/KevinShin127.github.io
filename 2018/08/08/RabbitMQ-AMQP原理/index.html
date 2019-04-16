@@ -82,7 +82,7 @@
 <meta name="description" content="RabbitMQ 是一个由 Erlang 语言开发的 基于 AMQP 协议的开源MQ。高级消息队列协议（AMQP1）是一个异步消息传递所使用的应用层协议规范。作为线路层协议，而不是 API），AMQP 客户端能够无视消息的来源任意发送和接受信息。 RabbitMQ 最初起源于金融系统，用于在分布式系统中消息传递，在易用性、扩展性、高可用性等方面表现不俗。 MQ模型所有MQ都包含3个基本对象生产者（">
 <meta name="keywords" content="AMQP,RabbitMQ">
 <meta property="og:type" content="article">
-<meta property="og:title" content="AMQP和RabbitMQ">
+<meta property="og:title" content="RabbitMQ(一) AMQP原理">
 <meta property="og:url" content="http://yoursite.com/2018/08/08/RabbitMQ-AMQP原理/index.html">
 <meta property="og:site_name" content="KevinShin&#39;s Blog">
 <meta property="og:description" content="RabbitMQ 是一个由 Erlang 语言开发的 基于 AMQP 协议的开源MQ。高级消息队列协议（AMQP1）是一个异步消息传递所使用的应用层协议规范。作为线路层协议，而不是 API），AMQP 客户端能够无视消息的来源任意发送和接受信息。 RabbitMQ 最初起源于金融系统，用于在分布式系统中消息传递，在易用性、扩展性、高可用性等方面表现不俗。 MQ模型所有MQ都包含3个基本对象生产者（">
@@ -92,9 +92,9 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5015984-275ea009bdf806a0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/558/format/webp">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5015984-2f509b7f34c47170.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/463/format/webp">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5015984-367dd717d89ae5db.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/554/format/webp">
-<meta property="og:updated_time" content="2018-11-08T12:48:11.221Z">
+<meta property="og:updated_time" content="2019-04-16T06:30:28.757Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="AMQP和RabbitMQ">
+<meta name="twitter:title" content="RabbitMQ(一) AMQP原理">
 <meta name="twitter:description" content="RabbitMQ 是一个由 Erlang 语言开发的 基于 AMQP 协议的开源MQ。高级消息队列协议（AMQP1）是一个异步消息传递所使用的应用层协议规范。作为线路层协议，而不是 API），AMQP 客户端能够无视消息的来源任意发送和接受信息。 RabbitMQ 最初起源于金融系统，用于在分布式系统中消息传递，在易用性、扩展性、高可用性等方面表现不俗。 MQ模型所有MQ都包含3个基本对象生产者（">
 <meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5015984-066ff248d5ff8eed.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/401/format/webp">
 
@@ -132,7 +132,7 @@
 
 
 
-  <title>AMQP和RabbitMQ | KevinShin's Blog</title>
+  <title>RabbitMQ(一) AMQP原理 | KevinShin's Blog</title>
   
 
 
@@ -308,7 +308,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">AMQP和RabbitMQ</h1>
+          <h1 class="post-title" itemprop="name headline">RabbitMQ(一) AMQP原理</h1>
         
 
         <div class="post-meta">
