@@ -102,7 +102,7 @@
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3012926-90e8d039865d658a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/569/format/webp">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3012926-4e9086b4bf3c3def.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/581/format/webp">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3012926-9903fd5347cdf94f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000/format/webp">
-<meta property="og:updated_time" content="2019-04-15T14:11:59.454Z">
+<meta property="og:updated_time" content="2019-04-16T06:29:49.574Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PHP数组结构的演变">
 <meta name="twitter:description" content="一. PHP数组结构的演变这个地方主要讲PHP5.6=&amp;gt;PHP7.0=&amp;gt;PHP7.1的演变过程  我们可以看到，数组本质就是一个hashtable结构，左侧的0~nTablemask便是hash下标，而后面有一个双向链表，便是我们通常所说的hash冲突的链地址法。 而绿色的双向链表，则是foreach遍历用的，这个地方用双向链表，主要是为了逆序访问来用的，遍历的时候，就是从pListH">
@@ -368,7 +368,7 @@
       
 
       
-        <h1 id="一-PHP数组结构的演变"><a href="#一-PHP数组结构的演变" class="headerlink" title="一. PHP数组结构的演变"></a>一. PHP数组结构的演变</h1><p>这个地方主要讲PHP5.6=&gt;PHP7.0=&gt;PHP7.1的演变过程</p>
+        <h2 id="一-PHP数组结构的演变"><a href="#一-PHP数组结构的演变" class="headerlink" title="一. PHP数组结构的演变"></a>一. PHP数组结构的演变</h2><p>这个地方主要讲PHP5.6=&gt;PHP7.0=&gt;PHP7.1的演变过程</p>
 <p><img src="//upload-images.jianshu.io/upload_images/3012926-1f55932b7bdc86a6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/446/format/webp" alt="image"></p>
 <p>我们可以看到，数组本质就是一个hashtable结构，左侧的0~nTablemask便是hash下标，而后面有一个双向链表，便是我们通常所说的hash冲突的链地址法。</p>
 <p>而绿色的双向链表，则是foreach遍历用的，这个地方用双向链表，主要是为了逆序访问来用的，遍历的时候，就是从pListHead开始不断的next便可以遍历所有的元素。这样要比下标遍历hashtable快得多。</p>
@@ -380,11 +380,11 @@
 <p>针对上面5.6所有的问题，提出了如上的结构。arData结构便是我们插入数据的结构，是一段连续的内存，在初始化/数组扩充时一次性内存申请好，这样内存便不会产生碎片化问题，并且我们看，hash冲突的时候是单链表，并且没有插入元素时候的双向链表，因为我们可以直接扫描数组便可以顺序/逆序访问插入的数据。</p>
 <p><img src="//upload-images.jianshu.io/upload_images/3012926-d6636590399e5edb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/219/format/webp" alt="image"></p>
 <p>如上是最新的数据结构，最主要的区别是把7.0的两段内存转化为一段内存，算是在内存上的继续优化。他的内存申请是从下标-8位置申请的，然后移动指针到key1位置。</p>
-<h1 id="二-PHP7-0数组源码实现"><a href="#二-PHP7-0数组源码实现" class="headerlink" title="二. PHP7.0数组源码实现"></a>二. PHP7.0数组源码实现</h1><h2 id="3-1-PHP7-0数组的主要数据结构"><a href="#3-1-PHP7-0数组的主要数据结构" class="headerlink" title="3.1 PHP7.0数组的主要数据结构"></a>3.1 PHP7.0数组的主要数据结构</h2><p><img src="//upload-images.jianshu.io/upload_images/3012926-58a18ca1170575a9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/204/format/webp" alt="image"></p>
+<h2 id="二-PHP7-0数组源码实现"><a href="#二-PHP7-0数组源码实现" class="headerlink" title="二. PHP7.0数组源码实现"></a>二. PHP7.0数组源码实现</h2><h3 id="3-1-PHP7-0数组的主要数据结构"><a href="#3-1-PHP7-0数组的主要数据结构" class="headerlink" title="3.1 PHP7.0数组的主要数据结构"></a>3.1 PHP7.0数组的主要数据结构</h3><p><img src="//upload-images.jianshu.io/upload_images/3012926-58a18ca1170575a9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/204/format/webp" alt="image"></p>
 <p>Bucket结构便是我们所说的保存插入数据的结构。主要包括：key(字符串，如果是数字下标，转化位字符串), value, h(只会计算一次，如果是数组下标，直接把key作为h)。</p>
 <p><img src="//upload-images.jianshu.io/upload_images/3012926-a5ea6434233bbb7d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/263/format/webp" alt="image"></p>
 <p>这便是PHP7.0的数组结构，我后面讲全部是用7.0结构讲，比较清晰。nNextFreeElement是无key值存储时使用的数据，用来分配key值。</p>
-<h2 id="3-2-PHP数组的hash方法"><a href="#3-2-PHP数组的hash方法" class="headerlink" title="3.2 PHP数组的hash方法"></a>3.2 PHP数组的hash方法</h2><p><img src="//upload-images.jianshu.io/upload_images/3012926-b3c0cf96e5a9298f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/462/format/webp" alt="image"></p>
+<h3 id="3-2-PHP数组的hash方法"><a href="#3-2-PHP数组的hash方法" class="headerlink" title="3.2 PHP数组的hash方法"></a>3.2 PHP数组的hash方法</h3><p><img src="//upload-images.jianshu.io/upload_images/3012926-b3c0cf96e5a9298f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/462/format/webp" alt="image"></p>
 <p>如上是php的hash源码，看一眼容易把人瞎蒙，然而把它简化一下便是：</p>
 <p><img src="//upload-images.jianshu.io/upload_images/3012926-6ea4e5202eb54d9e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/382/format/webp" alt="image"></p>
 <p>简单讲一下。其中源码中把 hash*33 转化为 (hash&lt;&lt;5) + hash</p>
@@ -401,22 +401,22 @@
 <p>hashmask=-8(10)=11111000(2补码)</p>
 <p>-8&lt;=h&lt;=-1</p>
 <p>7.1的结构因为是hash负下标，所以用的另一种计算策略，大同小异。</p>
-<h2 id="3-3-PHP数组插入数据"><a href="#3-3-PHP数组插入数据" class="headerlink" title="3.3 PHP数组插入数据"></a>3.3 PHP数组插入数据</h2><p><img src="//upload-images.jianshu.io/upload_images/3012926-2eea1b5d85075219.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/755/format/webp" alt="image"></p>
+<h3 id="3-3-PHP数组插入数据"><a href="#3-3-PHP数组插入数据" class="headerlink" title="3.3 PHP数组插入数据"></a>3.3 PHP数组插入数据</h3><p><img src="//upload-images.jianshu.io/upload_images/3012926-2eea1b5d85075219.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/755/format/webp" alt="image"></p>
 <p>大致流程如上，看一下就好。讲一下插入数据的结构变化。</p>
 <p><img src="//upload-images.jianshu.io/upload_images/3012926-9130911cb46a98bd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/568/format/webp" alt="image"></p>
 <p>在我们插入key6这个key值之后，在arData数据往后排，我们假设他与key1的hash冲突，所以使用链地址法，直接插入到链表首部。</p>
-<h2 id="3-4-PHP数组删除数据"><a href="#3-4-PHP数组删除数据" class="headerlink" title="3.4 PHP数组删除数据"></a>3.4 PHP数组删除数据</h2><p>在上面的结构，假如我们删除key1，会有两种考虑。</p>
+<h3 id="3-4-PHP数组删除数据"><a href="#3-4-PHP数组删除数据" class="headerlink" title="3.4 PHP数组删除数据"></a>3.4 PHP数组删除数据</h3><p>在上面的结构，假如我们删除key1，会有两种考虑。</p>
 <p>①. 删除该元素之后，我们是否要保证空间的利用率，把后面的数据移动，覆盖当前位置。</p>
 <p>②. 删除元素之后，直接把该位置空出。</p>
 <p>其实第一种策略是不可接受，因为这样会导致时间复杂度退化为O(n)，而第二种策略，我们控制当前位置之后，我们可以在内存扩充时，把这些空位置给删除掉即可。</p>
 <p><img src="//upload-images.jianshu.io/upload_images/3012926-41be396ced9bcb60.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000/format/webp" alt="image"></p>
-<h2 id="3-4-PHP数组内存申请及rehash"><a href="#3-4-PHP数组内存申请及rehash" class="headerlink" title="3.4 PHP数组内存申请及rehash"></a>3.4 PHP数组内存申请及rehash</h2><p>假设我们要在如下结构中插入key9</p>
+<h3 id="3-4-PHP数组内存申请及rehash"><a href="#3-4-PHP数组内存申请及rehash" class="headerlink" title="3.4 PHP数组内存申请及rehash"></a>3.4 PHP数组内存申请及rehash</h3><p>假设我们要在如下结构中插入key9</p>
 <p><img src="//upload-images.jianshu.io/upload_images/3012926-b4287b9d8fa4125a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/231/format/webp" alt="image"></p>
 <p>发现当前arData已经满了，所以我们申请新内存(初始大小位2，以2的倍数不断扩充)，把所有数据以内存的形式copy过去，然后扫描数组，把无用的数据给删除掉(用移动后面元素的策略)。因为nTableMask数值改变了然后进行rehash。</p>
 <p>这里有一个点值得提一下：把原数据copy过去的时候，我们可以选择遍历原先的数组，把有用的数据copy过去，也可以先把原内存的数据复制到新内存的位置，然后去遍历数组去移动数据。PHP实现选择了第二种，这样考虑应该是我们删除元素的次数比较少，直接以内存的形式copy数据要比遍历copy的速度快，在权衡之下选择了第二种。</p>
 <p><img src="//upload-images.jianshu.io/upload_images/3012926-8960886c70adcec5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000/format/webp" alt="image"></p>
 <p>结构变化如上图。</p>
-<h1 id="四-PHP数组的可优化点"><a href="#四-PHP数组的可优化点" class="headerlink" title="四. PHP数组的可优化点"></a>四. PHP数组的可优化点</h1><h2 id="4-1-PHP数组的退化案例"><a href="#4-1-PHP数组的退化案例" class="headerlink" title="4.1 PHP数组的退化案例"></a>4.1 PHP数组的退化案例</h2><p>本案例参考的鸟哥的博客。</p>
+<h2 id="四-PHP数组的可优化点"><a href="#四-PHP数组的可优化点" class="headerlink" title="四. PHP数组的可优化点"></a>四. PHP数组的可优化点</h2><h3 id="4-1-PHP数组的退化案例"><a href="#4-1-PHP数组的退化案例" class="headerlink" title="4.1 PHP数组的退化案例"></a>4.1 PHP数组的退化案例</h3><p>本案例参考的鸟哥的博客。</p>
 <p><img src="//upload-images.jianshu.io/upload_images/3012926-320d4d5556376d77.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/599/format/webp" alt="image"></p>
 <p>大概测了一下</p>
 <p><img src="//upload-images.jianshu.io/upload_images/3012926-90e8d039865d658a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/569/format/webp" alt="image"></p>
@@ -427,7 +427,7 @@
 <p>•导致插入元素时间复杂度退化为O(n*(1+n)/2)=O(n^2)</p>
 <p>那么65536^2在计算机1s处理10^8运算的情况下，大概36s以上，所以运行结果算是可预期的。</p>
 <p><img src="//upload-images.jianshu.io/upload_images/3012926-4e9086b4bf3c3def.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/581/format/webp" alt="image"></p>
-<h2 id="4-2-可进行优化的策略"><a href="#4-2-可进行优化的策略" class="headerlink" title="4.2 可进行优化的策略"></a>4.2 可进行优化的策略</h2><p>我们参考Java中hashtable的实现来使用红黑树解决这个问题。</p>
+<h3 id="4-2-可进行优化的策略"><a href="#4-2-可进行优化的策略" class="headerlink" title="4.2 可进行优化的策略"></a>4.2 可进行优化的策略</h3><p>我们参考Java中hashtable的实现来使用红黑树解决这个问题。</p>
 <p>•①.设定链表冲突长度的阀值</p>
 <p>•②.当链表长度超过阀值的时候，以key值为键值进行红黑树的转化，key全是字符串，所以我们可以以key的字典序进行排序</p>
 <p>•③.Hashtable的指针指向树根</p>
@@ -461,8 +461,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/03/08/MQ使用场景/" rel="next" title="消息队列MQ">
-                <i class="fa fa-chevron-left"></i> 消息队列MQ
+              <a href="/2018/03/08/MQ使用场景/" rel="next" title="消息队列MQ应用场景总结">
+                <i class="fa fa-chevron-left"></i> 消息队列MQ应用场景总结
               </a>
             
           </div>
@@ -625,7 +625,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一-PHP数组结构的演变"><span class="nav-number">1.</span> <span class="nav-text">一. PHP数组结构的演变</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二-PHP7-0数组源码实现"><span class="nav-number">2.</span> <span class="nav-text">二. PHP7.0数组源码实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-PHP7-0数组的主要数据结构"><span class="nav-number">2.1.</span> <span class="nav-text">3.1 PHP7.0数组的主要数据结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-PHP数组的hash方法"><span class="nav-number">2.2.</span> <span class="nav-text">3.2 PHP数组的hash方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-PHP数组插入数据"><span class="nav-number">2.3.</span> <span class="nav-text">3.3 PHP数组插入数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4-PHP数组删除数据"><span class="nav-number">2.4.</span> <span class="nav-text">3.4 PHP数组删除数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4-PHP数组内存申请及rehash"><span class="nav-number">2.5.</span> <span class="nav-text">3.4 PHP数组内存申请及rehash</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四-PHP数组的可优化点"><span class="nav-number">3.</span> <span class="nav-text">四. PHP数组的可优化点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-PHP数组的退化案例"><span class="nav-number">3.1.</span> <span class="nav-text">4.1 PHP数组的退化案例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-可进行优化的策略"><span class="nav-number">3.2.</span> <span class="nav-text">4.2 可进行优化的策略</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一-PHP数组结构的演变"><span class="nav-number">1.</span> <span class="nav-text">一. PHP数组结构的演变</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二-PHP7-0数组源码实现"><span class="nav-number">2.</span> <span class="nav-text">二. PHP7.0数组源码实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-PHP7-0数组的主要数据结构"><span class="nav-number">2.1.</span> <span class="nav-text">3.1 PHP7.0数组的主要数据结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-PHP数组的hash方法"><span class="nav-number">2.2.</span> <span class="nav-text">3.2 PHP数组的hash方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-PHP数组插入数据"><span class="nav-number">2.3.</span> <span class="nav-text">3.3 PHP数组插入数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-PHP数组删除数据"><span class="nav-number">2.4.</span> <span class="nav-text">3.4 PHP数组删除数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-PHP数组内存申请及rehash"><span class="nav-number">2.5.</span> <span class="nav-text">3.4 PHP数组内存申请及rehash</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四-PHP数组的可优化点"><span class="nav-number">3.</span> <span class="nav-text">四. PHP数组的可优化点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-PHP数组的退化案例"><span class="nav-number">3.1.</span> <span class="nav-text">4.1 PHP数组的退化案例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-可进行优化的策略"><span class="nav-number">3.2.</span> <span class="nav-text">4.2 可进行优化的策略</span></a></li></ol></li></ol></div>
             
 
           </div>
