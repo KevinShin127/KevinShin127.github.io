@@ -89,7 +89,7 @@
 <p>第三步，上面定义的是一个抽象类，可以根据具体的业务来使用。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 重复内容过滤器</span><br><span class="line"> * 该布隆过滤器总位数为2^32位, 判断条数为2^30条. hash函数最优为3个.(能够容忍最多的hash函数个数)</span><br><span class="line"> * 使用的三个hash函数为</span><br><span class="line"> * BKDR, SDBM, JSHash</span><br><span class="line"> *</span><br><span class="line"> * 注意, 在存储的数据量到2^30条时候, 误判率会急剧增加, 因此需要定时判断过滤器中的位为1的的数量是否超过50%, 超过则需要清空.</span><br><span class="line"> */</span><br><span class="line">class FilteRepeatedComments extends BloomFilterBase</span><br><span class="line">&#123;</span><br><span class="line">    protected $bit_array_name = &apos;repeated_comments_bloom_filter&apos;;</span><br><span class="line">    protected $bit_array_length = 0xFFFFFFFF;</span><br><span class="line">    protected $hash_set = array(      </span><br><span class="line">          HashSet::JSHASH,</span><br><span class="line">          HashSet::BKDRHASH,</span><br><span class="line">          HashSet::RSHASH,</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
-            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
                 <source type="audio/mpeg" src="">
             </audio>
             
@@ -107,6 +107,10 @@
 
 
     </div>
+    
+        <div class="side">
+            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#基本概念"><span class="toc-number">1.</span> <span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#哈希函数"><span class="toc-number">2.</span> <span class="toc-text">哈希函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#布隆过滤器原理："><span class="toc-number">3.</span> <span class="toc-text">布隆过滤器原理：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#php和redis实现bloom-filter方法"><span class="toc-number">4.</span> <span class="toc-text">php和redis实现bloom filter方法</span></a></li></ol>
+        </div>
     
 </div>
 

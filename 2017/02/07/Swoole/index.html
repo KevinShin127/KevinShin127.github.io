@@ -101,7 +101,7 @@
 <p>异步客户端需要设置回调函数，4个事件回调必须设置onConnect、onError、onReceive、onClose。分别在客户端连接成功、连接失败、收到数据、连接关闭时触发。<strong>同步阻塞客户端一定不要使用on方法</strong></p>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
-            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
                 <source type="audio/mpeg" src="">
             </audio>
             
@@ -119,6 +119,10 @@
 
 
     </div>
+    
+        <div class="side">
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Server"><span class="toc-number">1.</span> <span class="toc-text">Server</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#运行流程图"><span class="toc-number">1.0.1.</span> <span class="toc-text">运行流程图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进程-线程结构图"><span class="toc-number">1.0.2.</span> <span class="toc-text">进程/线程结构图</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#创建TCP-Server-示例代码"><span class="toc-number">1.0.2.1.</span> <span class="toc-text">创建TCP Server 示例代码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#构建Server对象"><span class="toc-number">1.0.2.2.</span> <span class="toc-text">构建Server对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#设置运行时参数"><span class="toc-number">1.0.2.3.</span> <span class="toc-text">设置运行时参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#属性列表"><span class="toc-number">1.0.2.4.</span> <span class="toc-text">属性列表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#注册事件回调函数"><span class="toc-number">1.0.2.5.</span> <span class="toc-text">注册事件回调函数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#编程须知："><span class="toc-number">1.0.3.</span> <span class="toc-text">编程须知：</span></a></li></ol></li></ol><li class="toc-item toc-level-1"><a class="toc-link" href="#Client"><span class="toc-number">2.</span> <span class="toc-text">Client</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#同步阻塞客户端"><span class="toc-number">2.1.</span> <span class="toc-text">同步阻塞客户端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#异步非阻塞客户端"><span class="toc-number">2.2.</span> <span class="toc-text">异步非阻塞客户端</span></a></li></ol></li>
+        </div>
     
 </div>
 
