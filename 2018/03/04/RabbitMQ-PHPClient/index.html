@@ -1,0 +1,184 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hans" class="loading">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>RabbitMQ（二）：安装 和 PHP Client - KevinShin&#39;s Blog</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate">
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="Later Equals Never.,安装根据操作系统不同官网提供了相应的安装说明：Windows、Debian / Ubuntu、RPM-based Linux、Mac
+Mac 用户推荐使用 HomeBrew 来安装：1brew in,"> 
+    <meta name="author" content="KevinShin"> 
+    <link rel="alternative" href="atom.xml" title="KevinShin&#39;s Blog" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <link rel="stylesheet" href="/css/diaspora.css">
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+</head>
+</html>
+<body class="loading">
+    <span id="config-title" style="display:none">KevinShin&#39;s Blog</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="icon-home image-icon" href="javascript:;" data-url="http://yoursite.com"></a>
+    <div title="播放/暂停" class="icon-play"></div>
+    <h3 class="subtitle">RabbitMQ（二）：安装 和 PHP Client</h3>
+    <div class="social">
+        <!--<div class="like-icon">-->
+            <!--<a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+        <!--</div>-->
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class="main">
+        <h1 class="title">RabbitMQ（二）：安装 和 PHP Client</h1>
+        <div class="stuff">
+            <span>三月 04, 2018</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>根据操作系统不同官网提供了相应的安装说明：<a href="https://link.jianshu.com/?t=http://www.rabbitmq.com/install-windows.html" target="_blank" rel="noopener">Windows</a>、<a href="https://link.jianshu.com/?t=http://www.rabbitmq.com/install-debian.html" target="_blank" rel="noopener">Debian / Ubuntu</a>、<a href="https://link.jianshu.com/?t=http://www.rabbitmq.com/install-rpm.html" target="_blank" rel="noopener">RPM-based Linux</a>、<a href="https://link.jianshu.com/?t=http://www.rabbitmq.com/install-standalone-mac.html" target="_blank" rel="noopener">Mac</a></p>
+<p>Mac 用户推荐使用 HomeBrew 来安装：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install rabbitmq</span><br></pre></td></tr></table></figure></p>
+<p>安装过程中会自动其所依赖的 Erlang 。</p>
+<h3 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h3><p>RabbitMQ server scripts 和 <a href="http://www.rabbitmq.com/cli.html" target="_blank" rel="noopener">CLI tools</a><br>被安装在/usr/local/sbin</p>
+<p><strong>添加环境变量</strong>:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export PATH=$PATH:/usr/local/sbin</span><br></pre></td></tr></table></figure></p>
+<p><strong>启动</strong>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rabbitmq-server</span><br></pre></td></tr></table></figure>
+<p>如下图则表示正常启动，completed with 6 plugins 表示启动的时候默认加载了6个插件：<br><img src="https://upload-images.jianshu.io/upload_images/2281730-6a1662cdfbfc9cac.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="正常启动"><br><strong>日志</strong>：<br>/var/log/rabbitmq目录下找到名为rabbit@[hostname].log日志文件</p>
+<h3 id="常用命令："><a href="#常用命令：" class="headerlink" title="常用命令："></a>常用命令：</h3><p>首先介绍两个概念，Erlang的节点和应用程序：节点可以理解为Erlang 的虚拟机，一个节点可以同时运行多个应用程序。节点之间可以进行本地通信（不管他们是不是运行在同一台服务器之上）。比如一个运行在节点A上的应用程序可以调用节点B上应用程序的方法，就好像调用本地函数一样。如果应用程序由于某些原因奔溃，Erlang 节点会自动尝试重启应用程序。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">//守护进程方式后台运行</span><br><span class="line">rabbitmq-server -detached</span><br><span class="line"></span><br><span class="line">//查询服务器状态</span><br><span class="line">rabbitmqctl status</span><br><span class="line"></span><br><span class="line">//关闭 RabbitMQ 节点，默认 node 名称是 rabbit@server </span><br><span class="line">rabbitmqctl stop</span><br><span class="line"></span><br><span class="line">//关闭指定node</span><br><span class="line">rabbitmqctl -n rabbit@server.example.com stop </span><br><span class="line"></span><br><span class="line">//关闭 RabbitMQ 应用程序，保持Erlang节点运行（这个命令在集群模式中将会很有用）</span><br><span class="line">rabbitmqctl stop_app</span><br><span class="line"></span><br><span class="line">//启动 RabbitMQ 应用程序</span><br><span class="line">rabbitmqctl start_app</span><br><span class="line"></span><br><span class="line">//重置 RabbitMQ 节点（该命令会清除所有的队列）：</span><br><span class="line">rabbitmqctl reset</span><br><span class="line"></span><br><span class="line">//查看已声明的队列</span><br><span class="line">rabbitmqctl list_queues</span><br><span class="line"></span><br><span class="line">//查看交换器</span><br><span class="line">rabbitmqctl list_exchanges</span><br><span class="line">//该命令还可以附加参数，比如列出交换器的名称、类型、是否持久化、是否自动删除：</span><br><span class="line">rabbitmqctl list_exchanges name type durable auto_delete</span><br><span class="line"></span><br><span class="line">//查看绑定</span><br><span class="line">rabbitmqctl list_bindings</span><br></pre></td></tr></table></figure>
+<p>  <a href="https://www.rabbitmq.com/rabbitmq-server.8.html" target="_blank" rel="noopener">更多命令参照官网</a></p>
+<h3 id="PHP-Client"><a href="#PHP-Client" class="headerlink" title="PHP Client"></a>PHP Client</h3><p><a href="http://www.rabbitmq.com/tutorials/tutorial-two-php.html" target="_blank" rel="noopener">详细文档参照官网</a></p>
+<ol>
+<li><p>下载安装<a href="https://github.com/php-amqplib/php-amqplib" target="_blank" rel="noopener">php-amqplib</a>扩展，建议使用<a href="https://github.com/5-say/composer-doc-cn" target="_blank" rel="noopener">Composer</a>安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;require&quot;: &#123;</span><br><span class="line">        &quot;php-amqplib/php-amqplib&quot;: &quot;&gt;=2.6.1&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>send.php</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">require_once __DIR__ . &apos;/vendor/autoload.php&apos;;</span><br><span class="line">use PhpAmqpLib\Connection\AMQPStreamConnection;</span><br><span class="line">use PhpAmqpLib\Message\AMQPMessage;</span><br><span class="line"></span><br><span class="line">//create a connection to the server</span><br><span class="line">$connection = new AMQPStreamConnection(&apos;localhost&apos;, 5672, &apos;guest&apos;, &apos;guest&apos;);</span><br><span class="line">$channel = $connection-&gt;channel();</span><br><span class="line"></span><br><span class="line">//declare a queue for us to send to</span><br><span class="line">$channel-&gt;queue_declare(&apos;hello&apos;, false, false, false, false);</span><br><span class="line"></span><br><span class="line">//publish a message to the queue</span><br><span class="line">$msg = new AMQPMessage(&apos;Hello World!&apos;);</span><br><span class="line">$channel-&gt;basic_publish($msg, &apos;&apos;, &apos;hello&apos;);</span><br><span class="line">echo &quot; [x] Sent &apos;Hello World!&apos;\n&quot;;</span><br><span class="line"></span><br><span class="line">//close the channel and the connection;</span><br><span class="line">$channel-&gt;close();</span><br><span class="line">$connection-&gt;close();</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>发送消息前，必须先声明一个队列。值得注意的是，这里的队列声明是幂等的，即只有才队列不存在的情况才会去创建。消息的主体是一个二进制数组(byte array)，因此我们可以自己随意选择编码方式，而不影响传输。</p>
+<ol start="3">
+<li>receive.php<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">require_once __DIR__ . &apos;/vendor/autoload.php&apos;;</span><br><span class="line">use PhpAmqpLib\Connection\AMQPStreamConnection;</span><br><span class="line"></span><br><span class="line">$connection = new AMQPStreamConnection(&apos;localhost&apos;, 5672, &apos;guest&apos;, &apos;guest&apos;);</span><br><span class="line">$channel = $connection-&gt;channel();</span><br><span class="line"></span><br><span class="line">//Note that we declare the queue here, as well. Because we might start the consumer before the publisher, we want to make sure the queue exists before we try to consume messages from it.</span><br><span class="line">$channel-&gt;queue_declare(&apos;hello&apos;, false, false, false, false);</span><br><span class="line"></span><br><span class="line">echo &quot; [*] Waiting for messages. To exit press CTRL+C\n&quot;;</span><br><span class="line"></span><br><span class="line">$callback = function ($msg) &#123;</span><br><span class="line">  echo &apos; [x] Received &apos;, $msg-&gt;body, &quot;\n&quot;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">$channel-&gt;basic_consume(&apos;hello&apos;, &apos;&apos;, false, true, false, false, $callback);</span><br><span class="line"></span><br><span class="line">while (count($channel-&gt;callbacks)) &#123;</span><br><span class="line">    $channel-&gt;wait();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>注意：这里接受消息我们也要先声明队列，因为实际应用中我们可能需要producer发送前先启动worker，所以我们要确保在我们消费消息之前队列存在。</p>
+<p>consumer获取消息的方式是MQ按照push的方式分发给worker的，如果我们启动多个worker，那么我们就会发现每次我们推给mq的消息会被依次分发给各个worker消费。</p>
+<p>4.消息确认（Message Acknowledgement）<br>rabbitmq的消息确认机制默认是被关闭的。如果我们在worker处理消息过程中杀死worker，那么worker重启之后，这条任务就会丢失。如果要确保任务不会丢失，就要使用以下代码:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$callback = function ($msg) &#123;</span><br><span class="line">  echo &apos; [x] Received &apos;, $msg-&gt;body, &quot;\n&quot;;</span><br><span class="line">  //ack回调</span><br><span class="line">  $msg-&gt;delivery_info[&apos;channel&apos;]-&gt;basic_ack($msg-&gt;delivery_info[&apos;delivery_tag&apos;]);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">$channel-&gt;basic_consume(&apos;task_queue&apos;, &apos;&apos;, false, false, false, false, $callback);</span><br></pre></td></tr></table></figure></p>
+<p>增加以上ack机制后，mq只有在收到确认之后才会将任务从队列中删除。</p>
+<ol start="5">
+<li>消息持久化（Message durability）<br>上面介绍的是如何在consumer崩溃的时候，task不丢失。但是当rabbitmq崩溃的时候queue和task仍然会丢失，很明显这是我们不能接受的，下面的代码就是如何让我们的queue和task持久化：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//声明持久化的队列</span><br><span class="line">$channel-&gt;queue_declare(&apos;task_queue&apos;, false, true, false, false); //第三个参数为true</span><br><span class="line">//消息持久化存储在队列中</span><br><span class="line">$msg = new AMQPMessage(</span><br><span class="line">    $data,</span><br><span class="line">    array(&apos;delivery_mode&apos; =&gt; AMQPMessage::DELIVERY_MODE_PERSISTENT)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        <li title="0" data-url="http://link.hhtjim.com/163/5146554.mp3"></li>
+                    
+                        <li title="1" data-url="http://link.hhtjim.com/qq/001faIUs4M2zna.mp3"></li>
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link" data-ae="false" data-ci="" data-cs="" data-r="" data-o="" data-a="" data-d="false">查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/diaspora.js"></script>
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</html>

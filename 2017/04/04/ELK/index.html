@@ -1,0 +1,170 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hans" class="loading">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Elasticsearch 安装配置 - KevinShin&#39;s Blog</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate">
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="Later Equals Never.,Elasticsearch安装配置安装java81234//查看java版本java -version//安装javayum -y install java-1.8.0
+下载Elasticsearc,"> 
+    <meta name="author" content="KevinShin"> 
+    <link rel="alternative" href="atom.xml" title="KevinShin&#39;s Blog" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <link rel="stylesheet" href="/css/diaspora.css">
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+</head>
+</html>
+<body class="loading">
+    <span id="config-title" style="display:none">KevinShin&#39;s Blog</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="icon-home image-icon" href="javascript:;" data-url="http://yoursite.com"></a>
+    <div title="播放/暂停" class="icon-play"></div>
+    <h3 class="subtitle">Elasticsearch 安装配置</h3>
+    <div class="social">
+        <!--<div class="like-icon">-->
+            <!--<a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+        <!--</div>-->
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class="main">
+        <h1 class="title">Elasticsearch 安装配置</h1>
+        <div class="stuff">
+            <span>四月 04, 2017</span>
+            
+  <ul class="post-tags-list"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/中间件/">中间件</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h1 id="Elasticsearch安装配置"><a href="#Elasticsearch安装配置" class="headerlink" title="Elasticsearch安装配置"></a>Elasticsearch安装配置</h1><h3 id="安装java8"><a href="#安装java8" class="headerlink" title="安装java8"></a>安装java8</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//查看java版本</span><br><span class="line">java -version</span><br><span class="line">//安装java</span><br><span class="line">yum -y install java-1.8.0</span><br></pre></td></tr></table></figure>
+<h3 id="下载Elasticsearch"><a href="#下载Elasticsearch" class="headerlink" title="下载Elasticsearch"></a>下载Elasticsearch</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//下载</span><br><span class="line">wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.4.2.zip</span><br><span class="line">//校验</span><br><span class="line">sha1sum elasticsearch-5.4.2.zip</span><br><span class="line">//解压</span><br><span class="line">sudo unzip -n elasticsearch-5.4.2.zip -d /usr/local/</span><br><span class="line">///usr/local/elasticsearch-5.4.2 即为$ES_HOME</span><br><span class="line">//启动</span><br><span class="line">/usr/local/elasticsearch-5.4.2/bin/elasticsearch</span><br></pre></td></tr></table></figure>
+<h3 id="常见错误"><a href="#常见错误" class="headerlink" title="常见错误"></a>常见错误</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">OpenJDK 64-Bit Server VM warning: INFO: os::commit_memory(0x0000000085330000, 2060255232, 0) failed; error=&apos;Cannot allocate memory&apos; (errno=12)</span><br></pre></td></tr></table></figure>
+<p><strong>错误原因</strong>：elasticsearch5.0默认分配jvm空间大小为2g</p>
+<p><strong>解决方案</strong>：修改jvm空间分配<br>vim /usr/local/elasticsearch-5.4.2/config/jvm.options<br>-Xms2g<br>-Xmx2g<br>修改为<br>-Xms512m<br>-Xmx512m </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">can not run elasticsearch as root</span><br></pre></td></tr></table></figure>
+<p><strong>错误原因</strong>：不能以root启动</p>
+<p><strong>解决方案</strong>：添加elasticsearch的用户并切换elasticsearch文件夹所属用户</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">groupadd es</span><br><span class="line"></span><br><span class="line">useradd es -g es -p es</span><br><span class="line"></span><br><span class="line">chown -R es:es /usr/local/elasticsearch-5.4.2/</span><br><span class="line"></span><br><span class="line">sudo chown -R seclogin:users  /usr/local/elasticsearch-5.4.2/</span><br><span class="line"></span><br><span class="line">max file descriptors [65535] for elasticsearch process is too low, increase to at least [65536]</span><br><span class="line"></span><br><span class="line">vim /etc/security/limits.conf </span><br><span class="line"></span><br><span class="line">//修改或者添加如下</span><br><span class="line">*        hard    nofile           65536</span><br><span class="line">*        soft    nofile           65536</span><br><span class="line"></span><br><span class="line">max virtual memory areas vm.max_map_count [65530] likely too low, increase to at least [262144]</span><br><span class="line"></span><br><span class="line">vim /etc/sysctl.conf</span><br><span class="line">//修改或者添加如下</span><br><span class="line">vm.max_map_count=262144</span><br><span class="line">//修改后sysctl -a，不起效就sysctl -p</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Failed to obtain node lock</span><br></pre></td></tr></table></figure>
+<p><strong>解决方案</strong>：<br>需要重启elasticsearch</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//停止elasticsearch</span><br><span class="line">ps -ef | grep elastic</span><br><span class="line">kill -9 xxx</span><br><span class="line">//切换到 es用户再重新执行（seclogin用户不需要）</span><br><span class="line">su es -c  /usr/local/elasticsearch-5.4.2/bin/elasticsearch</span><br></pre></td></tr></table></figure>
+<h3 id="外部访问"><a href="#外部访问" class="headerlink" title="外部访问"></a>外部访问</h3><p>需以下配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">vim /usr/local/elasticsearch-5.4.2/config/elasticsearch.yml</span><br><span class="line">network.host: 172.17.6.219 #本服务器ip</span><br><span class="line"></span><br><span class="line">//centos7以下需要修改iptables</span><br><span class="line">vim /etc/sysconfig/iptables</span><br><span class="line">-A INPUT -p tcp -m state --state NEW -m tcp --dport 9200 -j ACCEPT</span><br><span class="line">-A INPUT -p udp -m state --state NEW -m udp --dport 9200 -j ACCEPT</span><br><span class="line">service iptables restart</span><br><span class="line"></span><br><span class="line">//centos7需要修改firewall（如果没有防火墙就不用管了）</span><br><span class="line">firewall-cmd --permanent --add-port=9200/tcp</span><br><span class="line">firewall-cmd --reload</span><br><span class="line">firewall-cmd --state</span><br><span class="line"></span><br><span class="line">//后台启动elasticsearch</span><br><span class="line">/usr/local/elasticsearch-5.4.2/bin/elasticsearch -d</span><br></pre></td></tr></table></figure></p>
+<h3 id="Elasticsearch测试及使用"><a href="#Elasticsearch测试及使用" class="headerlink" title="Elasticsearch测试及使用"></a>Elasticsearch测试及使用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">//查看集群健康状态</span><br><span class="line">curl &apos;http://172.16.9.192:9200/_cat/health?v&apos;	(dev)</span><br><span class="line">curl &apos;http://10.10.1.71:9200/_cat/health?v&apos;     (test)</span><br><span class="line">curl &apos;http://10.1.2.56:9200/_cat/health?v&apos;      (online)</span><br><span class="line">//查看 Elasticsearch 的基本信息</span><br><span class="line">curl &apos;http://172.16.9.192:9200/?pretty&apos;         (dev)</span><br><span class="line">curl &apos;http://10.10.1.71:9200/?pretty&apos;		(test)</span><br><span class="line">curl &apos;http://10.1.2.56:9200/?pretty&apos;			(online)</span><br><span class="line">//列出所有索引</span><br><span class="line">curl &apos;http://172.16.9.192:9200/_cat/indices?v&apos;  (dev)</span><br><span class="line">curl &apos;http://10.10.1.71:9200/_cat/indices?v&apos;	(test)</span><br><span class="line">curl &apos;http://10.1.2.56:9200/_cat/indices?v&apos;	(online)</span><br><span class="line">//添加一个名叫 test的索引（可理解为数据库）</span><br><span class="line">curl -XPUT &apos;http://172.16.9.192:9200/test?pretty&apos;</span><br><span class="line">curl -XPUT &apos;http://10.1.2.56:9200/test?pretty&apos;</span><br><span class="line">//查看索引</span><br><span class="line">curl &apos;http://101.200.42.161:9200/test?pretty&apos;</span><br><span class="line">//创建一个类型</span><br><span class="line">curl -XPUT &apos;http://101.200.42.161:9200/test/_mapping/article?pretty&apos; -d &apos;&#123;</span><br><span class="line">    &quot;properties&quot;: &#123;</span><br><span class="line">        &quot;id&quot;: &#123;</span><br><span class="line">            &quot;type&quot;:      &quot;integer&quot;,</span><br><span class="line">            &quot;index&quot;:     &quot;not_analyzed&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;subject&quot;: &#123;</span><br><span class="line">            &quot;type&quot;:      &quot;string&quot;,</span><br><span class="line">            &quot;analyzer&quot;:  &quot;standard&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;content&quot;: &#123;</span><br><span class="line">            &quot;type&quot;:      &quot;string&quot;,</span><br><span class="line">            &quot;analyzer&quot;:  &quot;standard&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;author&quot;: &#123;</span><br><span class="line">            &quot;type&quot;:      &quot;string&quot;,</span><br><span class="line">            &quot;index&quot;:     &quot;not_analyzed&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;&apos;</span><br></pre></td></tr></table></figure>
+<h3 id="测试数据导入"><a href="#测试数据导入" class="headerlink" title="测试数据导入"></a>测试数据导入</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/bly2k/files/blob/master/accounts.zip?raw=true</span><br><span class="line">curl -XPOST &apos;http://101.200.42.161::9200/bank/account/_bulk?pretty&apos; --data-binary @accounts.json</span><br></pre></td></tr></table></figure>
+<h3 id="Elasticsearch-PHP-配置"><a href="#Elasticsearch-PHP-配置" class="headerlink" title="Elasticsearch-PHP 配置"></a>Elasticsearch-PHP 配置</h3><p><a href="https://www.elastic.co/guide/en/elasticsearch/client/php-api/5.0/_configuration.html" target="_blank" rel="noopener">https://www.elastic.co/guide/en/elasticsearch/client/php-api/5.0/_configuration.html</a></p>
+<h3 id="备注："><a href="#备注：" class="headerlink" title="备注："></a>备注：</h3><p>elasticsearch默认最大查询数量是一万，test和online环境将最大查询数量提到了十万，设置命令：<br>curl -XPUT <a href="http://10.1.2.56:9200/contentplatform/_settings" target="_blank" rel="noopener">http://10.1.2.56:9200/contentplatform/_settings</a> -d ‘{ “index” : { “max_result_window” : 100000}}’</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        <li title="0" data-url="http://link.hhtjim.com/163/5146554.mp3"></li>
+                    
+                        <li title="1" data-url="http://link.hhtjim.com/qq/001faIUs4M2zna.mp3"></li>
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link" data-ae="false" data-ci="" data-cs="" data-r="" data-o="" data-a="" data-d="false">查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/diaspora.js"></script>
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</html>

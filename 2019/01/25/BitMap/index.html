@@ -1,0 +1,166 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hans" class="loading">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>BitMap简介 - KevinShin&#39;s Blog</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate">
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="Later Equals Never.,常用的应用场景：1.超大文件求交集：现有两个各有20亿行的文件，每一行都只有一个数字，求这两个文件的交集。
+2.从海量电话号码中，统计不同号码的个数
+3.统计APP的日活
+
+记录用户在线状态/ 记录,"> 
+    <meta name="author" content="KevinShin"> 
+    <link rel="alternative" href="atom.xml" title="KevinShin&#39;s Blog" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <link rel="stylesheet" href="/css/diaspora.css">
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+</head>
+</html>
+<body class="loading">
+    <span id="config-title" style="display:none">KevinShin&#39;s Blog</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="icon-home image-icon" href="javascript:;" data-url="http://yoursite.com"></a>
+    <div title="播放/暂停" class="icon-play"></div>
+    <h3 class="subtitle">BitMap简介</h3>
+    <div class="social">
+        <!--<div class="like-icon">-->
+            <!--<a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+        <!--</div>-->
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class="main">
+        <h1 class="title">BitMap简介</h1>
+        <div class="stuff">
+            <span>一月 25, 2019</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <h3 id="常用的应用场景："><a href="#常用的应用场景：" class="headerlink" title="常用的应用场景："></a>常用的应用场景：</h3><p>1.超大文件求交集：现有两个各有20亿行的文件，每一行都只有一个数字，求这两个文件的交集。</p>
+<p>2.从海量电话号码中，统计不同号码的个数</p>
+<p>3.统计APP的日活</p>
+<ol start="4">
+<li>记录用户在线状态/ 记录用户每月签到状态</li>
+</ol>
+<p>5.bitmap实现大数据排序和去重</p>
+<h3 id="什么是位图"><a href="#什么是位图" class="headerlink" title="什么是位图"></a>什么是位图</h3><p>bitmap即位图法，可以通俗的理解为bit数组<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">byte[] bytes = new bytes[2];</span><br><span class="line">bytes[0] = 01100100; // 就直接写二进制了</span><br><span class="line">bytes[1] = 10100000;</span><br></pre></td></tr></table></figure></p>
+<p>假设我们现在有一个(3,6,7,14,16)数组，那么我们怎么取记录呢？<br>1）开辟定长数组，后将数组内元素的所有Bit位均置为0<br><img src="http://upload-images.jianshu.io/upload_images/2281730-27ba2c6634e5cbc6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"><br>2）遍历数组将相关bit位置为1<br><img src="http://upload-images.jianshu.io/upload_images/2281730-245fa9619e005967.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></p>
+<p>一个int字符通常占用4个字节，即32bit，而通过上述的存储方式，一个int字符只占用1个bit位，大大节省了存储空间。<br>而实际业务应用中，通常key使用的不是int字符而是字符串日志，这时候就需要对key进行hash处理，这种情况就会有一定的概率发生hash碰撞，也就存在一定的误判率。（可以参照bloom filter的实现）</p>
+<h3 id="php实现bitmap"><a href="#php实现bitmap" class="headerlink" title="php实现bitmap"></a>php实现bitmap</h3><p>通过位操作运算来实现一个bit array</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">//32bit</span><br><span class="line">class BitMap &#123;</span><br><span class="line"></span><br><span class="line">    private $array = [];</span><br><span class="line"></span><br><span class="line">    public function __construct() &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function setBit($bitNumber) &#123;</span><br><span class="line">        $arrayIdx = $bitNumber &gt;&gt; 5; // I suppose 32 bit int</span><br><span class="line">        $bitIdx = $bitNumber &amp; 0x1f;</span><br><span class="line">        if (!isset($this-&gt;array[$arrayIdx])) $this-&gt;array[$arrayIdx] = 0;</span><br><span class="line">        $this-&gt;array[$arrayIdx] = (1&lt;&lt;$bitIdx);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function uRShift($a, $b) &#123;</span><br><span class="line">        if($b == 0) return $a;</span><br><span class="line">        return ($a &gt;&gt; $b) &amp; ~(1&lt;&lt;(8*PHP_INT_SIZE-1)&gt;&gt;($b-1));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function getBit($bitNumber) &#123;</span><br><span class="line">        $arrayIdx = $bitNumber &gt;&gt; 5;</span><br><span class="line">        $bitIdx = $bitNumber &amp; 0x1f;</span><br><span class="line">        if (!isset($this-&gt;array[$arrayIdx])) $this-&gt;array[$arrayIdx] = 0;</span><br><span class="line">        return $this-&gt;uRShift($this-&gt;array[$arrayIdx], $bitIdx)&amp;1;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$bitmap = new BitMap();</span><br><span class="line">$bitmap-&gt;setBit(33);</span><br><span class="line">echo $bitmap-&gt;getBit(32);</span><br><span class="line">echo &quot;\n&quot;;</span><br><span class="line">echo $bitmap-&gt;getBit(33);</span><br><span class="line">echo &quot;\n&quot;;</span><br><span class="line">echo $bitmap-&gt;getBit(34);</span><br><span class="line">echo &quot;\n&quot;;</span><br><span class="line">//0</span><br><span class="line">//1</span><br><span class="line">//0</span><br></pre></td></tr></table></figure>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        <li title="0" data-url="http://link.hhtjim.com/163/5146554.mp3"></li>
+                    
+                        <li title="1" data-url="http://link.hhtjim.com/qq/001faIUs4M2zna.mp3"></li>
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link" data-ae="false" data-ci="" data-cs="" data-r="" data-o="" data-a="" data-d="false">查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/diaspora.js"></script>
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</html>

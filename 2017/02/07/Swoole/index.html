@@ -1,0 +1,189 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hans" class="loading">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>初识swoole - KevinShin&#39;s Blog</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate">
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="Later Equals Never.,Server运行流程图
+进程/线程结构图
+创建TCP Server 示例代码12345678910111213141516171819202122//创建Server对象，监听 127.0.0.1:,"> 
+    <meta name="author" content="KevinShin"> 
+    <link rel="alternative" href="atom.xml" title="KevinShin&#39;s Blog" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <link rel="stylesheet" href="/css/diaspora.css">
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+</head>
+</html>
+<body class="loading">
+    <span id="config-title" style="display:none">KevinShin&#39;s Blog</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="icon-home image-icon" href="javascript:;" data-url="http://yoursite.com"></a>
+    <div title="播放/暂停" class="icon-play"></div>
+    <h3 class="subtitle">初识swoole</h3>
+    <div class="social">
+        <!--<div class="like-icon">-->
+            <!--<a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+        <!--</div>-->
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class="main">
+        <h1 class="title">初识swoole</h1>
+        <div class="stuff">
+            <span>二月 07, 2017</span>
+            
+  <ul class="post-tags-list"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/PHP/">PHP</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/swoole/">swoole</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h1 id="Server"><a href="#Server" class="headerlink" title="Server"></a>Server</h1><h3 id="运行流程图"><a href="#运行流程图" class="headerlink" title="运行流程图"></a>运行流程图</h3><p><img src="https://wiki.swoole.com/static/uploads/swoole.jpg" alt="image"></p>
+<h3 id="进程-线程结构图"><a href="#进程-线程结构图" class="headerlink" title="进程/线程结构图"></a>进程/线程结构图</h3><p><img src="https://wiki.swoole.com/static/image/process.jpg" alt="image"></p>
+<h4 id="创建TCP-Server-示例代码"><a href="#创建TCP-Server-示例代码" class="headerlink" title="创建TCP Server 示例代码"></a>创建TCP Server 示例代码</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">//创建Server对象，监听 127.0.0.1:9501端口</span><br><span class="line">$serv = new swoole_server(&quot;127.0.0.1&quot;, 9501); </span><br><span class="line"></span><br><span class="line">//监听连接进入事件</span><br><span class="line">$serv-&gt;on(&apos;connect&apos;, function ($serv, $fd) &#123;  </span><br><span class="line">    echo &quot;Client: Connect.\n&quot;;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">//服务器可以同时被成千上万个客户端连接，$fd就是客户端连接的唯一标识符</span><br><span class="line"></span><br><span class="line">//监听数据接收事件</span><br><span class="line">$serv-&gt;on(&apos;receive&apos;, function ($serv, $fd, $from_id, $data) &#123;</span><br><span class="line">    $serv-&gt;send($fd, &quot;Server: &quot;.$data);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">//监听连接关闭事件</span><br><span class="line">$serv-&gt;on(&apos;close&apos;, function ($serv, $fd) &#123;</span><br><span class="line">    echo &quot;Client: Close.\n&quot;;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">//启动服务器</span><br><span class="line">$serv-&gt;start();</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>==swoole_server只能用于php-cli环境，否则会抛出致命错误。<br>请勿在使用swoole_server之前调用其他异步IO的API，否则将无法创建swoole_server。==</p>
+</blockquote>
+<p>swoole_server是异步服务器，支持TCP、UDP、UnixSocket 3种协议，通过监听事件的方式来执行程序的。使用者无需关注底层实现细节，仅需要设置网络事件的回调函数即可。<br>如当有新的TCP连接进入时会执行onConnect事件回调，当某个连接向服务器发送数据时会回调onReceive函数。客户端主动断开连接，会触发onClose事件回调。</p>
+<h4 id="构建Server对象"><a href="#构建Server对象" class="headerlink" title="构建Server对象"></a>构建Server对象</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$serv = new swoole_server(&quot;127.0.0.1&quot;, 9501, SWOOLE_BASE, SWOOLE_SOCK_TCP);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>$mode运行的模式，swoole提供了<a href="https://wiki.swoole.com/wiki/page/353.html" target="_blank" rel="noopener">3种运行模式</a>，默认为多进程模式</li>
+<li>$sock_type指定socket的类型，支持TCP/UDP、TCP6/UDP6、UnixSock Stream/Dgram 6种<h4 id="设置运行时参数"><a href="#设置运行时参数" class="headerlink" title="设置运行时参数"></a>设置运行时参数</h4></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$serv-&gt;set(array(</span><br><span class="line">    &apos;reactor_num&apos; =&gt; 2, //通过此参数来调节poll线程的数量，以充分利用多核。reactor_num和writer_num默认设置为CPU核数</span><br><span class="line">    &apos;worker_num&apos; =&gt; 4, //设置启动的worker进程数量。swoole采用固定worker进程的模式。PHP代码中是全异步非阻塞，worker_num配置为CPU核数的1-4倍即可。如果是同步阻塞，worker_num配置为100或者更高</span><br><span class="line">    &apos;max_conn&apos; =&gt; 10000, //最大tcp连接</span><br><span class="line">    &apos;max_request&apos; =&gt; 50, //此参数表示worker进程在处理完n次请求后结束运行。manager会重新创建一个worker进程。此选项用来防止worker进程内存溢出。</span><br><span class="line">    &apos;daemonize&apos; =&gt; true, //守护进程化</span><br><span class="line">    &apos;backlog&apos; =&gt; 128, //Listen队列长度.此参数将决定最多同时有多少个待accept的连接，swoole本身accept效率是很高的，基本上不会出现大量排队情况。</span><br><span class="line">    &apos;log_file&apos; =&gt; &apos;/data/log/swoole.log&apos; //日志</span><br><span class="line">));</span><br></pre></td></tr></table></figure>
+<h4 id="属性列表"><a href="#属性列表" class="headerlink" title="属性列表"></a>属性列表</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$serv-&gt;setting;  //set()函数所设置的参数会保存到$setting属性上。</span><br><span class="line">$serv-&gt;manager_pid; //管理进程的PID，通过向管理进程发送SIGUSR1信号可实现柔性重启</span><br><span class="line">$serv-&gt;master_pid; //主进程的PID，通过向主进程发送SIGTERM信号可安全关闭服务器</span><br><span class="line">$serv-&gt;worker_id;  //得到当前Worker进程的编号，包括Task进程。</span><br><span class="line">$serv-&gt;worker_pid; //得到当前Worker进程的操作系统进程ID</span><br><span class="line">$serv-&gt;connections; //当前服务器的客户端连接，可使用foreach遍历所有连接</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>==工作进程重启后worker_id的值是不变的==</p>
+</blockquote>
+<h4 id="注册事件回调函数"><a href="#注册事件回调函数" class="headerlink" title="注册事件回调函数"></a>注册事件回调函数</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$serv-&gt;on(&apos;Connect&apos;, &apos;my_onConnect&apos;);</span><br><span class="line">$serv-&gt;on(&apos;Receive&apos;, &apos;my_onReceive&apos;);</span><br><span class="line">$serv-&gt;on(&apos;Close&apos;, &apos;my_onClose&apos;);</span><br><span class="line">$serv-&gt;on(&apos;Task&apos;, &apos;my_onTask&apos;);//处理异步任务</span><br><span class="line">$serv-&gt;on(&apos;Finish&apos;, &apos;my_onFinish&apos;);//返回处理异步任务的结果</span><br></pre></td></tr></table></figure>
+<p>PHP中可以使用<a href="https://wiki.swoole.com/wiki/page/458.html" target="_blank" rel="noopener">4种回调函数</a>的风格,我个人比较倾向函数式。</p>
+<h3 id="编程须知："><a href="#编程须知：" class="headerlink" title="编程须知："></a>编程须知：</h3><ul>
+<li>在异步IO的程序中，不得使用sleep/usleep/time_sleep_until/time_nanosleep</li>
+</ul>
+<p>onReceive事件中执行了sleep函数，server在100秒内无法再收到任何客户端请求。</p>
+<ul>
+<li>在swoole程序中禁止使用exit/die，如果PHP代码中有exit/die，当前工作的Worker进程、Task进程、User进程、以及swoole_process进程会立即退出。</li>
+</ul>
+<p>建议使用try/catch的方式替换exit/die，实现中断执行跳出PHP函数调用栈。</p>
+<h1 id="Client"><a href="#Client" class="headerlink" title="Client"></a>Client</h1><h2 id="同步阻塞客户端"><a href="#同步阻塞客户端" class="headerlink" title="同步阻塞客户端"></a>同步阻塞客户端</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">$client = new swoole_client(SWOOLE_SOCK_TCP);</span><br><span class="line"></span><br><span class="line">//连接到服务器</span><br><span class="line">if (!$client-&gt;connect(&apos;127.0.0.1&apos;, 9501, 0.5))</span><br><span class="line">&#123;</span><br><span class="line">    die(&quot;connect failed.&quot;);</span><br><span class="line">&#125;</span><br><span class="line">//向服务器发送数据</span><br><span class="line">if (!$client-&gt;send(&quot;hello world&quot;))</span><br><span class="line">&#123;</span><br><span class="line">    die(&quot;send failed.&quot;);</span><br><span class="line">&#125;</span><br><span class="line">//从服务器接收数据</span><br><span class="line">$data = $client-&gt;recv();</span><br><span class="line">if (!$data)</span><br><span class="line">&#123;</span><br><span class="line">    die(&quot;recv failed.&quot;);</span><br><span class="line">&#125;</span><br><span class="line">echo $data;</span><br><span class="line">//关闭连接</span><br><span class="line">$client-&gt;close();</span><br></pre></td></tr></table></figure>
+<p>这个客户端是同步阻塞的，connect/send/recv 会等待IO完成后再返回。同步阻塞操作并不消耗CPU资源，IO操作未完成当前进程会自动转入sleep模式，当IO完成后操作系统会唤醒当前进程，继续向下执行代码。</p>
+<h2 id="异步非阻塞客户端"><a href="#异步非阻塞客户端" class="headerlink" title="异步非阻塞客户端"></a>异步非阻塞客户端</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">$client = new swoole_client(SWOOLE_SOCK_TCP, SWOOLE_SOCK_ASYNC);</span><br><span class="line"></span><br><span class="line">//注册连接成功回调</span><br><span class="line">$client-&gt;on(&quot;connect&quot;, function($cli) &#123;</span><br><span class="line">    $cli-&gt;send(&quot;hello world\n&quot;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">//注册数据接收回调</span><br><span class="line">$client-&gt;on(&quot;receive&quot;, function($cli, $data)&#123;</span><br><span class="line">    echo &quot;Received: &quot;.$data.&quot;\n&quot;;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">//注册连接失败回调</span><br><span class="line">$client-&gt;on(&quot;error&quot;, function($cli)&#123;</span><br><span class="line">    echo &quot;Connect failed\n&quot;;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">//注册连接关闭回调</span><br><span class="line">$client-&gt;on(&quot;close&quot;, function($cli)&#123;</span><br><span class="line">    echo &quot;Connection close\n&quot;;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">//发起连接</span><br><span class="line">$client-&gt;connect(&apos;127.0.0.1&apos;, 9501, 0.5);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>==异步客户端只能用于cli环境==  </p>
+</blockquote>
+<p>异步客户端是非阻塞的。可以用于编写高并发的程序。 </p>
+<p>异步客户端需要设置回调函数，4个事件回调必须设置onConnect、onError、onReceive、onClose。分别在客户端连接成功、连接失败、收到数据、连接关闭时触发。<strong>同步阻塞客户端一定不要使用on方法</strong></p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        <li title="0" data-url="http://link.hhtjim.com/163/5146554.mp3"></li>
+                    
+                        <li title="1" data-url="http://link.hhtjim.com/qq/001faIUs4M2zna.mp3"></li>
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link" data-ae="false" data-ci="" data-cs="" data-r="" data-o="" data-a="" data-d="false">查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/diaspora.js"></script>
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</html>

@@ -1,0 +1,179 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hans" class="loading">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MySQL索引 - KevinShin&#39;s Blog</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate">
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="Later Equals Never.,关于MySQL索引（《高性能MySQL》阅读有感）B-Tree索引当我们讨论索引的时候，没有特别指明类型，多半是指的B-Tree索引。InnoDB引擎使用的B+Tree结构，按照原数据格式（MyIS,"> 
+    <meta name="author" content="KevinShin"> 
+    <link rel="alternative" href="atom.xml" title="KevinShin&#39;s Blog" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <link rel="stylesheet" href="/css/diaspora.css">
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+</head>
+</html>
+<body class="loading">
+    <span id="config-title" style="display:none">KevinShin&#39;s Blog</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="icon-home image-icon" href="javascript:;" data-url="http://yoursite.com"></a>
+    <div title="播放/暂停" class="icon-play"></div>
+    <h3 class="subtitle">MySQL索引</h3>
+    <div class="social">
+        <!--<div class="like-icon">-->
+            <!--<a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+        <!--</div>-->
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class="main">
+        <h1 class="title">MySQL索引</h1>
+        <div class="stuff">
+            <span>四月 17, 2017</span>
+            
+  <ul class="post-tags-list"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/MySQL/">MySQL</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h2 id="关于MySQL索引（《高性能MySQL》阅读有感）"><a href="#关于MySQL索引（《高性能MySQL》阅读有感）" class="headerlink" title="关于MySQL索引（《高性能MySQL》阅读有感）"></a>关于MySQL索引（《高性能MySQL》阅读有感）</h2><h3 id="B-Tree索引"><a href="#B-Tree索引" class="headerlink" title="B-Tree索引"></a>B-Tree索引</h3><p>当我们讨论索引的时候，没有特别指明类型，多半是指的B-Tree索引。<br>InnoDB引擎使用的B+Tree结构，按照原数据格式（MyISAM前缀压缩）进行存储，根据主键引用被索引的行（MyISAM根据物理位置）。</p>
+<p>B-树意味着所有值都是按照顺序存储的，并且每个叶子页到根节点的距离相同。因为存储引擎不再需要进行全表扫描，只需要从索引根节点搜索，所以可以加快数据访问速度</p>
+<h4 id="局部性原理和磁盘预读"><a href="#局部性原理和磁盘预读" class="headerlink" title="局部性原理和磁盘预读"></a>局部性原理和磁盘预读</h4><p>由于磁盘的存取速度与内存之间鸿沟,为了提高效率,要尽量减少磁盘I/O.磁盘往往不是严格按需读取，而是每次都会预读,磁盘读取完需要的数据,会顺序向后读一定长度的数据放入内存。而这样做的理论依据是计算机科学中著名的局部性原理：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">当一个数据被用到时，其附近的数据也通常会马上被使用</span><br><span class="line">程序运行期间所需要的数据通常比较集中</span><br></pre></td></tr></table></figure></p>
+<p>由于磁盘顺序读取的效率很高(不需要寻道时间，只需很少的旋转时间)，因此对于具有局部性的程序来说，预读可以提高I/O效率.预读的长度一般为页(page)的整倍数。</p>
+<h3 id="什么是索引"><a href="#什么是索引" class="headerlink" title="什么是索引"></a>什么是索引</h3><p>索引可以理解为目录，字典的搜索表。<br>索引的本质就是排序。每建一个索引就相当于将增加一个包含主键和索引列的索引表，表中数据按照索引顺序排序。因为索引字段不宜过多，索引也不能滥用，否则会影响写表的性能。</p>
+<h3 id="聚簇索引和非聚簇索引"><a href="#聚簇索引和非聚簇索引" class="headerlink" title="聚簇索引和非聚簇索引"></a>聚簇索引和非聚簇索引</h3><ul>
+<li>聚簇：索引的叶子节点指向数据  innodb</li>
+<li>非聚簇：索引的叶子节点指向引用 myisam</li>
+</ul>
+<p>对于innodb引擎，如果没有primary key，在用unique key作主键，如果没有unique，则mysql会生成一个rowid作主键</p>
+<h2 id="索引类型"><a href="#索引类型" class="headerlink" title="索引类型"></a>索引类型</h2><ul>
+<li>主键索引 primary key</li>
+<li>唯一索引 unique index</li>
+<li>普通索引 index </li>
+<li>全文索引 fulltext index</li>
+</ul>
+<h2 id="索引的使用原则"><a href="#索引的使用原则" class="headerlink" title="索引的使用原则"></a>索引的使用原则</h2><h4 id="前缀索引"><a href="#前缀索引" class="headerlink" title="前缀索引"></a>前缀索引</h4><h4 id="区分度"><a href="#区分度" class="headerlink" title="区分度"></a>区分度</h4><p>区分度指字段在数据库的不重复比。区分度越大，索引效果越明显。在区分度较小的字段上新建索引，基本无效，还会增加大量的索引文件，得不偿失。</p>
+<h4 id="最左匹配原则"><a href="#最左匹配原则" class="headerlink" title="最左匹配原则"></a>最左匹配原则</h4><p>MySQL会一直向右匹配直到遇到范围查询(&gt;、&lt;、between、like)就停止匹配。缀索引在排序 order by 和分组 group by 操作的时候无法使用。</p>
+<h4 id="模糊查询"><a href="#模糊查询" class="headerlink" title="模糊查询"></a>模糊查询</h4><p>前模糊是无法使用索引的，类似where c like ‘%a’。而like ‘a%’ 等价于 where c &gt;= ‘a’ and c &lt; ‘b’</p>
+<h4 id="不能使用索引的场景"><a href="#不能使用索引的场景" class="headerlink" title="不能使用索引的场景"></a>不能使用索引的场景</h4><ul>
+<li>前模糊：例 like “%N” </li>
+<li>隐式转换：例如name字段是varchar，而sql中where name=1而不是name=’1’</li>
+</ul>
+<h4 id="函数运算"><a href="#函数运算" class="headerlink" title="函数运算"></a>函数运算</h4><p>不要在查询语句中加函数运算，否则索引失效。</p>
+<h4 id="不要滥用索引"><a href="#不要滥用索引" class="headerlink" title="不要滥用索引"></a>不要滥用索引</h4><p>多余的索引会降低读写性能。即使满足了上述原则，mysql还是可能会弃用索引，因为有些查询即使使用索引，也会出现大量的随机io，相对于从数据记录中的顺序io开销更大。</p>
+<h4 id="EXPLAIN"><a href="#EXPLAIN" class="headerlink" title="EXPLAIN"></a>EXPLAIN</h4><h4 id="表扫描"><a href="#表扫描" class="headerlink" title="表扫描"></a>表扫描</h4><p>Handler_read_rnd_next 的值高则意味着查询运行低效，存在大量的表扫描，应该建立索引补救。</p>
+<h2 id="索引优化"><a href="#索引优化" class="headerlink" title="索引优化"></a>索引优化</h2><h4 id="索引碎片与维护"><a href="#索引碎片与维护" class="headerlink" title="索引碎片与维护"></a>索引碎片与维护</h4><p>在数据表长期的更改过程中，索引文件和数据文件都会产生空洞，形成碎片。修复表的过程十分耗费资源，可以用比较长的周期修复表。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//清理方法</span><br><span class="line">alert table xxx engine innodb; </span><br><span class="line">//或</span><br><span class="line">optimize table xxx;</span><br></pre></td></tr></table></figure></p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        <li title="0" data-url="http://link.hhtjim.com/163/5146554.mp3"></li>
+                    
+                        <li title="1" data-url="http://link.hhtjim.com/qq/001faIUs4M2zna.mp3"></li>
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link" data-ae="false" data-ci="" data-cs="" data-r="" data-o="" data-a="" data-d="false">查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/diaspora.js"></script>
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</html>
