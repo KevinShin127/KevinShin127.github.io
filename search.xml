@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[何笙的博客]]></title>
+    <url>%2F2019%2F10%2F12%2FShen%2F</url>
+    <content type="text"><![CDATA[Stay hungry. Stay Foolish.]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[BitMap简介]]></title>
     <url>%2F2019%2F01%2F25%2FBitMap%2F</url>
     <content type="text"><![CDATA[常用的应用场景：1.超大文件求交集：现有两个各有20亿行的文件，每一行都只有一个数字，求这两个文件的交集。 2.从海量电话号码中，统计不同号码的个数 3.统计APP的日活 记录用户在线状态/ 记录用户每月签到状态 5.bitmap实现大数据排序和去重 什么是位图bitmap即位图法，可以通俗的理解为bit数组123byte[] bytes = new bytes[2];bytes[0] = 01100100; // 就直接写二进制了bytes[1] = 10100000; 假设我们现在有一个(3,6,7,14,16)数组，那么我们怎么取记录呢？1）开辟定长数组，后将数组内元素的所有Bit位均置为02）遍历数组将相关bit位置为1 一个int字符通常占用4个字节，即32bit，而通过上述的存储方式，一个int字符只占用1个bit位，大大节省了存储空间。而实际业务应用中，通常key使用的不是int字符而是字符串日志，这时候就需要对key进行hash处理，这种情况就会有一定的概率发生hash碰撞，也就存在一定的误判率。（可以参照bloom filter的实现） php实现bitmap通过位操作运算来实现一个bit array 1234567891011121314151617181920212223242526272829303132333435363738394041&lt;?php//32bitclass BitMap &#123; private $array = []; public function __construct() &#123; &#125; public function setBit($bitNumber) &#123; $arrayIdx = $bitNumber &gt;&gt; 5; // I suppose 32 bit int $bitIdx = $bitNumber &amp; 0x1f; if (!isset($this-&gt;array[$arrayIdx])) $this-&gt;array[$arrayIdx] = 0; $this-&gt;array[$arrayIdx] = (1&lt;&lt;$bitIdx); &#125; public function uRShift($a, $b) &#123; if($b == 0) return $a; return ($a &gt;&gt; $b) &amp; ~(1&lt;&lt;(8*PHP_INT_SIZE-1)&gt;&gt;($b-1)); &#125; public function getBit($bitNumber) &#123; $arrayIdx = $bitNumber &gt;&gt; 5; $bitIdx = $bitNumber &amp; 0x1f; if (!isset($this-&gt;array[$arrayIdx])) $this-&gt;array[$arrayIdx] = 0; return $this-&gt;uRShift($this-&gt;array[$arrayIdx], $bitIdx)&amp;1; &#125;&#125;$bitmap = new BitMap();$bitmap-&gt;setBit(33);echo $bitmap-&gt;getBit(32);echo &quot;\n&quot;;echo $bitmap-&gt;getBit(33);echo &quot;\n&quot;;echo $bitmap-&gt;getBit(34);echo &quot;\n&quot;;//0//1//0]]></content>
@@ -112,11 +117,6 @@
         <tag>PHP</tag>
         <tag>swoole</tag>
       </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[何笙的博客]]></title>
-    <url>%2F2016%2F10%2F12%2FShen%2F</url>
-    <content type="text"><![CDATA[Stay hungry. Stay Foolish.]]></content>
   </entry>
   <entry>
     <title><![CDATA[Hexo+GitHub搭建个人Blog]]></title>
