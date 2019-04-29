@@ -114,6 +114,11 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[何笙的博客]]></title>
+    <url>%2F2016%2F10%2F12%2FShen%2F</url>
+    <content type="text"><![CDATA[Stay hungry. Stay Foolish.]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[Hexo+GitHub搭建个人Blog]]></title>
     <url>%2F2015%2F10%2F06%2FHEXO%2F</url>
     <content type="text"><![CDATA[Hexo简介Hexo是一款基于Node.js的静态博客框架，可以方便的生成静态网页托管在GitHub和Heroku上。参见：Github地址 安装Git/Node.js依赖本地安装git、node.js。这个不赘述了。1234//git安装检测git --version//npm安装检测npm -v 安装Hexo12345678910//安装npm install hexo -g//初始化网站hexo init blog //新建bloghexo new test//生成静态文件hexo g//开启本地服务器hexo s 打开浏览器输入地址： localhost:4000 就能看到页面了。 更多相关命令参见：https://hexo.io/zh-cn/ 推送GitHubGitHub创建个人仓库 仓库名必须为：github账号名.github.io，固定写法，别问为啥。 本地生成ssh密钥文件：1ssh-keygen -t rsa -C &quot;你的GitHub注册邮箱&quot; 然后直接三个回车即可，默认不需要设置密码。然后vi ~/.ssh/id_rsa.pub文件，将内容全部复制 打开GitHub/Setting/SSH keys页面,new SSH Key标题随意，内容复制进入保存，输入 ssh git@github.com ：https://pic3.zhimg.com/80/v2-da481ffa686410becd4186c656b4ebd6_hd.jpg如上则说明成功 修改站点配置文件打开blog根目录下的_config.yml，翻到最后修改为：1234deploy: type: gitrepo: 这里填入你之前在GitHub上创建仓库的完整路径，记得加上 .gitbranch: master 然后输入1hexo g -d //生成并推送 然后在浏览器输入xxxx.github.io就可访问了。 更换主题主题传送门 我使用的NEXT主题：github地址 NEXT主题中文配置文档 NEXT主题去掉footer字样 绑定域名]]></content>
